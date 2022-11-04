@@ -26,6 +26,10 @@ app.use(session({
     saveUninitialized: true
 }))
 
+app.get('/register', (req, res) =>{
+    res.render('register')
+})
+
 
 app.use('/uploads', express.static ('uploads'))
 app.use('/css', express.static ('css'))
@@ -123,8 +127,20 @@ app.listen(3000,() => {
     console.log('Server is running...')
 })
 
+app.post ('/register', async (req, res) =>{
 
 
+    const {username, password } = req.body
+    let salt = await bcrypt.genSalt(10)
+    let hashedPassword = await bcrypt.hash(password, salt)
+    console.log(hashedPassword)
+
+    res.redirect('/login')
+})
+
+app.get('/login', (req, res) =>{
+    res.render('login')
+})
 
 
 

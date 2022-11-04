@@ -13,7 +13,12 @@ module.exports = {
         type: Sequelize.TEXT
       },
       found_fk: {
-        type: Sequelize.STRING
+        type: Sequelize.INTEGER,
+        references:{model:'found_posts', key:'id'}
+      },
+      user_fk: {
+        type: Sequelize.INTEGER,
+        references:{model:'users', key:'id'}
       },
       createdAt: {
         allowNull: false,

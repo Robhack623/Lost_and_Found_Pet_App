@@ -2,7 +2,7 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('found_posts', {
+    await queryInterface.createTable('lost_posts', {
       id: {
         allowNull: false,
         autoIncrement: true,
@@ -37,10 +37,14 @@ module.exports = {
         type: Sequelize.TEXT
       },
       pet_pic: {
-        type: Sequelize.BLOB
-      },
-      date_found: {
         type: Sequelize.STRING
+      },
+      date_lost: {
+        type: Sequelize.STRING
+      },
+      user_fk: {
+        type: Sequelize.INTEGER,
+        references:{model:'users', key:'id'}
       },
       createdAt: {
         allowNull: false,
@@ -53,6 +57,6 @@ module.exports = {
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('found_posts');
+    await queryInterface.dropTable('lost_posts');
   }
 };
