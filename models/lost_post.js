@@ -11,6 +11,8 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      models.lost_posts.belongsTo(models.users, {foreignKey:'user_fk'})
+      models.lost_posts.hasMany(models.lost_comments, {foreignKey: 'lost_fk'})
     }
   }
   lost_post.init({
@@ -23,8 +25,9 @@ module.exports = (sequelize, DataTypes) => {
     age: DataTypes.STRING,
     zip_code: DataTypes.STRING,
     description: DataTypes.TEXT,
-    pet_pic: DataTypes.BLOB,
-    date_lost: DataTypes.STRING
+    pet_pic: DataTypes.STRING,
+    date_lost: DataTypes.STRING,
+    user_fk: DataTypes.INTEGER
   }, {
     sequelize,
     modelName: 'lost_post',

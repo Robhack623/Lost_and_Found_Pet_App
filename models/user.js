@@ -11,20 +11,19 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      models.users.hasMany(models.found_comments, {foreignKey:'user_fk'})
+      models.users.hasMany(models.lost_comments, {foreignKey:'user_fk'})
+      models.users.hasMany(models.found_posts, {foreignKey:'user_fk'})
+      models.users.hasMany(models.lost_posts, {foreignKey:'user_fk'})
     }
   }
   user.init({
     first_name: DataTypes.STRING,
     last_name: DataTypes.STRING,
     username: DataTypes.STRING,
-    password: DataTypes.STRING,
     email: DataTypes.STRING,
     phone_number: DataTypes.STRING,
-    zip_code: DataTypes.STRING,
-    found_post_fk: DataTypes.STRING,
-    lost_post_fk: DataTypes.STRING,
-    found_comment_fk: DataTypes.STRING,
-    lost_comment_fk: DataTypes.STRING
+    zip_code: DataTypes.STRING
   }, {
     sequelize,
     modelName: 'user',

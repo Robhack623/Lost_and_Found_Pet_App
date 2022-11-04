@@ -11,11 +11,15 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      models.lost_comments.belongsTo(models.users, {foreignKey:'user_fk'})
+      models.lost_comments.belongsTo(models.lost_posts, {foreignKey:'lost_fk'})
+      
     }
   }
   lost_comment.init({
     body: DataTypes.TEXT,
-    lost_fk: DataTypes.STRING
+    lost_fk: DataTypes.INTEGER,
+    user_fk: DataTypes.INTEGER
   }, {
     sequelize,
     modelName: 'lost_comment',
