@@ -11,10 +11,10 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      models.users.hasMany(models.found_comments, {foreignKey:'user_fk'})
-      models.users.hasMany(models.lost_comments, {foreignKey:'user_fk'})
-      models.users.hasMany(models.found_posts, {foreignKey:'user_fk'})
-      models.users.hasMany(models.lost_posts, {foreignKey:'user_fk'})
+      models.user.hasMany(models.found_comment, {as: 'found_comments', foreignKey:'user_fk'})
+      models.user.hasMany(models.lost_comment, {as: 'lost_comments', foreignKey:'user_fk'})
+      models.user.hasMany(models.found_post, {as: 'found_posts', foreignKey:'user_fk'})
+      models.user.hasMany(models.lost_post, {as: 'lost_posts', foreignKey:'user_fk'})
     }
   }
   user.init({

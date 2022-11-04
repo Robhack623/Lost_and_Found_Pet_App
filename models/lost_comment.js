@@ -11,8 +11,8 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      models.lost_comments.belongsTo(models.users, {foreignKey:'user_fk'})
-      models.lost_comments.belongsTo(models.lost_posts, {foreignKey:'lost_fk'})
+      models.lost_comment.belongsTo(models.user, {as: 'user', foreignKey:'user_fk'})
+      models.lost_comment.belongsTo(models.lost_post, {as: 'lost_posts', foreignKey:'lost_fk'})
       
     }
   }
