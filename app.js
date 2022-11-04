@@ -123,17 +123,22 @@ app.post('/add-posts', async (req, res) => {
 })
 
 */
-app.listen(3000,() => {
-    console.log('Server is running...')
-})
+
 
 app.post ('/register', async (req, res) =>{
 
 
-    const {username, password } = req.body
+    const {firstName, lastName, email, phoneNumber, zipCode, username, password } = req.body
     let salt = await bcrypt.genSalt(10)
     let hashedPassword = await bcrypt.hash(password, salt)
-    console.log(hashedPassword)
+    
+    const user = await models.user.create({
+        first_name:firstName, last_name:lastName, email:email, phone_number:phoneNumber, zip_code:zipCode, username:username, password:hashedPassword
+    })
+
+    let user_upload = await user.save()
+
+    console.log(user_upload)
 
     res.redirect('/login')
 })
@@ -148,6 +153,6 @@ app.get('/login', (req, res) =>{
 
 
 
-
-
-
+app.listen(3000,() => {
+    console.log('Server is running...')
+})
