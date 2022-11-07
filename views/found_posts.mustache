@@ -6,8 +6,8 @@
     </head>
     <body>
        
-         <h1>Found Pets</h1>
-         <form method="POST" action="/">
+         <h1>Found Pets</h1><hr>
+         <form method="POST" action="/found_posts">
             <input type="text" placeholder="species" name="species" />    
             <input type="text" placeholder="color" name="color" /> 
             <input type="text" placeholder="breed" name="breed" />
@@ -20,8 +20,27 @@
             <input type="text" placeholder="picture" name="picture" />
             <input type="text" placeholder=date_found name="date_found" />
             <butto>Save</button>
+            <br>
 
- 
+            <ul>
+            {{Animals}}
+             <h2>{{species}}</h2>
+             <h2>{{color}}</h2>
+             <h2>{{breed}} </h2>
+             <h2>{{gender}} </h2>
+             <h2>{{name}} </h2>
+             <h2>{{size}} </h2>
+             <h2>{{age}} </h2>
+             <h2>{{location}} </h2>
+             <h2>{{description}} </h2>
+             <h2>{{date_lost}} </h2>
+
+            {{Animals}}
+
+        </ul>
+
+
+
         </form>
     </body>
 </html>
