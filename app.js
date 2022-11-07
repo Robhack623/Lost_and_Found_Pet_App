@@ -86,7 +86,6 @@ app.post('/login', async (req, res) => {
             if(req.session) {
                 req.session.userId = user.id
                 req.session.username = user.username 
-                req.session.firstName = user.first_name
             }
             res.redirect('dashboard')
         } else {
