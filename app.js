@@ -30,6 +30,7 @@ app.use(session({
 }))
 
 /*  a route that is rendering the found_posts page. */
+
 app.use('/uploads', express.static ('uploads'))
 app.use('/css', express.static ('css'))
 
@@ -198,9 +199,75 @@ app.post('/add-posts', async (req, res) => {
 })
 
 */
+app.get('/register', async (req, res) => {
+    const {firstName, lastName, email, phoneNumber, zipCode, username, password } = req.body
+    let salt = await bcrypt.genSalt(10)
+    let hashedPassword = await bcrypt.hash(password, salt)
+    
+    const user = await models.user.create({
+        first_name:firstName, last_name:lastName, email:email, phone_number:phoneNumber, zip_code:zipCode, username:username, password:hashedPassword
+    })
 
+    let user_upload = await user.save()
 
+    console.log(user_upload)
 
+    res.render('register')
+})
+
+/*   route that is rendering the found_posts page. */
+app.get('/found-posts', async (req, res) => {
+    let result = await models.found_post.findAll({})
+    let comments = await models.found_comment.findAll({})
+    
+        res.render('found_posts', {result:result, comments:comments})
+})
+/*  a route that is rendering the found_posts page. */
+app.post('/found-posts', async (req, res) => {
+    let species = req.body.species
+    let color = req.body.color
+    let breed = req.body.breed
+    let gender = req.body.gender
+    let name = req.body.name
+    let size = req.body.size
+    let age = req.body.age
+    let location = req.body.location
+    let description = req.body.description
+    let date_found = req.body.date_found
+
+    
+
+    let found_animal = await models.found_post.build({
+        species: species,
+        color: color,
+        breed: breed,
+        gender: gender,
+        name: name,
+        size: size,
+        age: age,
+        location: location,
+        description: description,
+        date_found: date_found
+
+    })
+   await found_animal.save()
+   res.redirect('/found-posts')
+})
+
+/* deleting the post from the database. */
+app.post('/delete-post', async(req, res) =>  {
+    let {id} = req.body
+    await models.found_post.destroy({where:{id}})
+    res.redirect('/found-posts')
+}) 
+
+app.post('/comments', async(req, res) => {
+let {comment,id} = req.body
+
+await models.found_comment.create({body:comment,found_fk:id})
+
+    res.redirect('/found-posts')
+})
 
 
 
