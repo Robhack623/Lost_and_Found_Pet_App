@@ -10,9 +10,6 @@ const formidable = require ('formidable')
 const {v4:uuidv4} = require ('uuid') 
 const db = require('./models');
 
-
-
-
 global.__basedir = __dirname
 
 app.engine('mustache', mustacheExpress()) 
@@ -89,9 +86,11 @@ app.post('/login', async (req, res) => {
             if(req.session) {
                 req.session.userId = user.id
                 req.session.username = user.username 
+                req.session.firstName = user.first_name
             }
             res.redirect('dashboard')
         } else {
+        
         res.render('login', {errorMessage: 'Invalid username or password'})
     }}
 
