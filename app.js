@@ -9,11 +9,7 @@ const { Op } = require('sequelize')
 const formidable = require ('formidable')
 const {v4:uuidv4} = require ('uuid') 
 
-
 global.__basedir = __dirname
-
-
-
 
 app.engine('mustache', mustacheExpress()) 
 app.set('views', './views')
@@ -26,13 +22,11 @@ app.use(session({
     saveUninitialized: true
 }))
 
-app.get('/register', (req, res) =>{
-    res.render('register')
-})
-
-
 app.use('/uploads', express.static ('uploads'))
 app.use('/css', express.static ('css'))
+
+
+
 
 function uploadFile(req, callback) {
     new formidable.IncomingForm ().parse (req)
@@ -123,7 +117,9 @@ app.post('/add-posts', async (req, res) => {
 })
 
 */
-
+app.get('/register', (req, res) =>{
+    res.render('register')
+})
 
 app.post ('/register', async (req, res) =>{
 
