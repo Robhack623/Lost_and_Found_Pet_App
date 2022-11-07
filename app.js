@@ -11,9 +11,6 @@ const formidable = require ('formidable')
 const {v4:uuidv4} = require ('uuid') 
 const db = require('./models');
 
-
-
-
 global.__basedir = __dirname
 
 /* mustache engine to be used in the app. */
@@ -90,6 +87,7 @@ app.post('/login', async (req, res) => {
             }
             res.redirect('dashboard')
         } else {
+        
         res.render('login', {errorMessage: 'Invalid username or password'})
     }}
 
