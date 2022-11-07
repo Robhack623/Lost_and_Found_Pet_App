@@ -13,6 +13,20 @@ const {v4:uuidv4} = require ('uuid')
 global.__basedir = __dirname
 
 
+app.post ('/register', async (req, res) =>{
+
+
+    const {username, password } = req.body
+    let salt = await bcrypt.genSalt(10)
+    let hashedPassword = await bcrypt.hash(password, salt)
+    console.log(hashedPassword)
+
+    res.redirect('/login')
+})
+
+app.get('/login', (req, res) =>{
+    res.render('login')
+})
 
 
 app.engine('mustache', mustacheExpress()) 
@@ -75,7 +89,7 @@ app.post ('/add_lost_post', async (req,res)=>{
     let dateLost =  req.body.dateLost
     
 
-    let lost_animal = models.Lost_Page.build ({
+    let lost_animal = models.lost_post.build ({
             species: species, 
             color: color,
             breed: breed,
@@ -99,7 +113,7 @@ app.post ('/add_lost_post', async (req,res)=>{
 })
 
 app.get ('/lost-animals', async (req,res) => {
-    let lost_animals = await models.Lost_Page.findAll({})
+    let lost_animals = await models.lost_post.findAll({})
     res.render('add_lost_post', {allAnimals:lost_animals})
     
 })
@@ -127,20 +141,6 @@ app.listen(3000,() => {
     console.log('Server is running...')
 })
 
-app.post ('/register', async (req, res) =>{
-
-
-    const {username, password } = req.body
-    let salt = await bcrypt.genSalt(10)
-    let hashedPassword = await bcrypt.hash(password, salt)
-    console.log(hashedPassword)
-
-    res.redirect('/login')
-})
-
-app.get('/login', (req, res) =>{
-    res.render('login')
-})
 
 
 
