@@ -1,8 +1,6 @@
-
 /* This is importing the necessary packages to run the app. */
 const express = require('express')
 const app = express()
-
 const mustacheExpress = require('mustache-express')
 var bcrypt = require('bcryptjs');
 var session = require('express-session')
@@ -28,15 +26,10 @@ app.use(session({
 }))
 
 /*  a route that is rendering the found_posts page. */
-
 app.use('/uploads', express.static ('uploads'))
 app.use('/css', express.static ('css'))
 
-app.get('/found_posts', async (req, res) => {
-    let result = await models.found_animal.findAll({})
-    res.render('found_posts', {result:result})
-})
-
+/*  ------Login-Registration-Logout-AuthenticationMiddleware-Dashboard------ */
 app.get('/login', (req, res) => {
     res.render('login')
 })
@@ -67,13 +60,6 @@ app.get('/logout', authentication, (req,res)=>{
     res.redirect('login')
 })
 
-app.get('/dashboard', authentication, (req, res) =>{
-    const username = req.session.username 
-    console.log('Hello, ' + username)
-
-    res.render('dashboard', {username: req.session.username})
-})
-
 function authentication(req, res, next) {
     if(req.session) {
         if(req.session.username) {
@@ -85,6 +71,45 @@ function authentication(req, res, next) {
         res.redirect('/login')
     }
 }
+
+app.get('/register', (req, res) => {
+    res.render('register')
+})
+
+app.post('/register', async (req, res) => {
+    const {firstName, lastName, email, phoneNumber, zipCode, username, password } = req.body
+    let salt = await bcrypt.genSalt(10)
+    let hashedPassword = await bcrypt.hash(password, salt)
+    
+    const user = await models.user.create({
+        first_name:firstName, last_name:lastName, email:email, phone_number:phoneNumber, zip_code:zipCode, username:username, password:hashedPassword
+    })
+
+    let user_upload = await user.save()
+
+    console.log(user_upload)
+
+    res.redirect('login')
+})
+
+app.get('/dashboard', authentication, (req, res) =>{
+    const username = req.session.username 
+    res.render('dashboard', {username: req.session.username})
+})
+
+app.get('/found_posts', async (req, res) => {
+    let result = await models.found_animal.findAll({})
+    res.render('found_posts', {result:result})
+})
+
+app.get('/dashboard', authentication, (req, res) =>{
+    const username = req.session.username 
+    console.log('Hello, ' + username)
+
+    res.render('dashboard', {username: req.session.username})
+})
+
+/*  ------Found Pages Post/Comment/etc------   */
 
 
 function uploadFile(req, callback) {
@@ -199,84 +224,6 @@ app.get('/show-comments/:id', async (req,res) => {
     res.render('all_comments_for_post', post.dataValues)
     
 })
-
-
-
-/*
-
-app.get('/lost-animals/:id', async (req,res) => {
-    let lost_animals = await models.lost_post.findAll({})
-    const postID = req.params.id
-    const post = await models.lost_post.findOne({
-        include: [
-            {
-                model: models.lost_comment,
-                as: 'lost_comments'
-            }
-        ],
-        where: {
-            id: postID
-        }
-    })
-    console.log (post.dataValues)
-    res.render('add_lost_post', {allAnimals:lost_animals, lost_comments: post.lost_comments})
-    
-})
-*/
-/*
-app.get('/lost-animals/:id', async (req,res) => {
-    let lost_animals = await models.lost_post.findAll({})
-    const postID = req.params.id
-    const post = await models.lost_post.findOne({
-        include: [
-            {
-                model: models.lost_comment,
-                as: 'lost_comments'
-            }
-        ],
-        where: {
-            id: postID
-        }
-    })
-    console.log (post.dataValues)
-    res.render('add_lost_post', {allAnimals:lost_animals, lost_comments: post.dataValues})
-=======
-app.get ('/lost-animals', authentication, async (req,res) => {
-    let lost_animals = await models.Lost_Page.findAll({})
-    res.render('add_lost_post', {allAnimals:lost_animals})
-})
-
-app.get('/register', (req, res) => {
-    res.render('register')
-})
-
-app.post('/register', async (req, res) => {
-    const {firstName, lastName, email, phoneNumber, zipCode, username, password } = req.body
-    let salt = await bcrypt.genSalt(10)
-    let hashedPassword = await bcrypt.hash(password, salt)
-    
-})
-
-//res.json(post)
-/*
-app.get('/lost-animals/:id', async (req,res) => {
-    const postID = parseInt(req.params.id)
-    const post = await models.lost_post.findByPk (postID, {
-        include: [
-            {
-                model: models.lost_comment,
-                as: 'lost_comments'
-            }
-        ]
-    })
-    console.log (post)
-    res.render('add_lost_post', post.dataValues)
-    
-})
-*/
-
-
-
 
 app.post ('/add-comments', async (req, res) =>{
    // const postID = parseInt(req.params.id)
