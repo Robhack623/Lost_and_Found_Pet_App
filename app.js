@@ -202,6 +202,7 @@ app.post('/found-posts', async (req, res) => {
 /* deleting the post from the database. */
 app.post('/delete-post', async(req, res) =>  {
     let {id} = req.body
+    await models.found_comment.destroy({where:{found_fk:id}})
     await models.found_post.destroy({where:{id}})
     res.redirect('/found-posts')
 }) 
