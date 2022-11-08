@@ -57,6 +57,7 @@
     font-weight: 500;
     padding-left: 30px;
     padding-right: 20px;
+    cursor: pointer;
 }
 
 .logout-link {
@@ -65,6 +66,7 @@
     margin: 0;
     color: #fff;
     font-weight: 500;
+    cursor: pointer;
 }
 
 .footer {

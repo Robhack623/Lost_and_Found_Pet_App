@@ -2,6 +2,7 @@
 /* This is importing the necessary packages to run the app. */
 const express = require('express')
 const app = express()
+
 const mustacheExpress = require('mustache-express')
 var bcrypt = require('bcryptjs');
 var session = require('express-session')
@@ -31,41 +32,13 @@ app.use(session({
 app.use('/uploads', express.static ('uploads'))
 app.use('/css', express.static ('css'))
 
-app.get('/found-posts', async (req, res) => {
+app.get('/found_posts', async (req, res) => {
 let result = await models.found_animal.findAll({})
     res.render('found_posts', {result:result})
 })
 
-
-/*  a route that is rendering the found_posts page. */
-app.post('/found-posts', async (req, res) => {
-    let species = req.body.species
-    let color = req.body.color
-    let breed = req.body.breed
-    let gender = req.body.gender
-    let name = req.body.name
-    let size = req.body.size
-    let age = req.body.age
-    let location = req.body.location
-    let description = req.body.description
-    let date_found = req.body.date_found
-
-
-    let found_animal = await models.found_animal.build({
-        species: species,
-        color: color,
-        breed: breed,
-        gender: gender,
-        name: name,
-        size: size,
-        age: age,
-        location: location,
-        description: description,
-        date_found: date_found
-
-    })
-   await found_animal.save()
-   res.render('found_posts')
+app.get('/login', (req, res) => {
+    res.render('login')
 })
 
 app.post('/login', async (req, res) => {
@@ -175,29 +148,13 @@ app.post ('/add_lost_post', async (req,res)=>{
 app.get ('/lost-animals', authentication, async (req,res) => {
     let lost_animals = await models.Lost_Page.findAll({})
     res.render('add_lost_post', {allAnimals:lost_animals})
-    
 })
 
-
-
-/*
-app.post('/add-posts', async (req, res) => {
-    const {title, description, createdName, published } = req.body 
-
-     // create the movie object 
-    const post = models.Post.build({
-        title: title, 
-        description: description, 
-        created: createdName, 
-        published: published
-    })
-    // save the movie 
-    await post.save()
-    res.redirect ('/')
+app.get('/register', (req, res) => {
+    res.render('register')
 })
 
-*/
-app.get('/register', async (req, res) => {
+app.post('/register', async (req, res) => {
     const {firstName, lastName, email, phoneNumber, zipCode, username, password } = req.body
     let salt = await bcrypt.genSalt(10)
     let hashedPassword = await bcrypt.hash(password, salt)
@@ -210,7 +167,7 @@ app.get('/register', async (req, res) => {
 
     console.log(user_upload)
 
-    res.render('register')
+    res.redirect('login')
 })
 
 /*   route that is rendering the found_posts page. */
@@ -222,18 +179,8 @@ app.get('/found-posts', async (req, res) => {
 })
 /*  a route that is rendering the found_posts page. */
 app.post('/found-posts', async (req, res) => {
-    let species = req.body.species
-    let color = req.body.color
-    let breed = req.body.breed
-    let gender = req.body.gender
-    let name = req.body.name
-    let size = req.body.size
-    let age = req.body.age
-    let location = req.body.location
-    let description = req.body.description
-    let date_found = req.body.date_found
 
-    
+    let {species, color, breed, gender, name, size, age, location, description, date_found} = req.body    
 
     let found_animal = await models.found_post.build({
         species: species,
@@ -260,14 +207,12 @@ app.post('/delete-post', async(req, res) =>  {
 }) 
 
 app.post('/comments', async(req, res) => {
-let {comment,id} = req.body
+    let {comment,id} = req.body
 
-await models.found_comment.create({body:comment,found_fk:id})
+    await models.found_comment.create({body:comment,found_fk:id})
 
     res.redirect('/found-posts')
 })
-
-
 
 app.listen(3000,() => {
     console.log('Server is running...')
