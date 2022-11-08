@@ -1,1 +1,12 @@
 <h1>LOGIN PAGE</h1>
+
+                                                               
+<form method="POST" action="/login">
+    <input type="text" placeHolder="Enter username" name="username" />
+    <input type="password" placeholder="Enter password" name="password" />
+    <button>Login</button>
+</form>
+
+<button onclick="window.location.href='http://localhost:3000/register'">Register</button>
+
+{{errorMessage}}

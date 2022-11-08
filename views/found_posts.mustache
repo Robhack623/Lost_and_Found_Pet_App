@@ -1,0 +1,68 @@
+
+<html>
+
+    <head>
+    
+    </head>
+    <body>
+       
+
+         <h1>Found Pets 🐾 </h1><hr>
+         <form method="POST" action="/found-posts">
+            <p>Species</p>
+            <input type="text" placeholder="Species" name="species" /> 
+            <p>Color</p>
+            <input type="text" placeholder="Color" name="color" /> 
+            <p>Breed</p>
+            <input type="text" placeholder="Breed" name="breed" />
+            <p>Gender</p>
+            <input type="text" placeholder="Gender" name="gender" />
+            <p>Name</p>
+            <input type="text" placeholder="Name" name="name" />
+            <p>Size</p>
+            <input type="text" placeholder="Size" name="size" />
+            <p>Age</p>
+            <input type="text" placeholder="Age" name="age" />
+            <p>Location</p>
+            <input type="text" placeholder="Location" name="location" />
+            <p>Description</p>
+            <input type="text" placeholder="Description" name="description" />
+            <p>Picture</p>
+            <input type="text" placeholder="Picture" name="picture" />
+            <p>Date found</p>
+            <input type="text" placeholder=Datefound name="date_found" />
+            <button>Save</button>
+            </form>
+               
+               
+      
+            <ul>
+            {{#result}}
+             <li>Species:{{species}}</li>
+             <li>Color:{{color}}</li>
+             <li>Breed:{{breed}} </li>
+             <li>Gender:{{gender}} </li>
+             <li>Name:{{name}} </li>
+             <li>Size:{{size}} </li>
+             <li>Age:{{age}} </li>
+             <li>Location:{{location}} </li>
+             <li>Description:{{description}} </li>
+             <li>Date:{{date_lost}} </li>
+             
+              {{#comments}}
+        Comments: {{body}}
+        {{/comments}} 
+             <h1>------------</h1>
+             <form method="POST" action = "/delete-post">
+             <input type = "hidden" name =id value={{id}} /> 
+             <button>Delete post</button>
+            </form>
+            
+            <form method="POST" action = "/comments">  
+            <input type ="text" placeholder = "Comments" name ="comment" />
+            <input type = "hidden" name=id value={{id}} /> 
+            <button>Add comment</button>
+            </form>       
+        {{/result}}
+    </body>
+</html>
