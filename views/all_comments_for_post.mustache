@@ -1,0 +1,47 @@
+<html>
+  <head>
+    <link rel ="stylesheet" href="/css/lostPage.css"></link>
+  </head>
+  <body>
+
+        <button onclick = "window.location.href='http://localhost:3000/lost-animals'">Go To all Posts</button>
+        <ul >
+          {{#details}}
+            <img src = "/uploads/{{pet_pic}}" class ="comment-image" />
+            <h3>{{species}}</h3>
+            <h3>{{color}}</h3>
+            <h3>{{breed}} </h3>
+            <h3>{{gender}} </h3>
+            <h3>{{name}} </h3>
+            <h3>{{size}} </h3>
+            <h3>{{age}} </h3>
+            <h3>{{zip_code}} </h3>
+            <p>{{description}} </p>
+            <h3>{{date_lost}} </h3>
+
+
+
+           <button onclick = "window.location.href='http://localhost:3000/postComment/{{id}}'">Comment</button>
+           {{/details}}
+        </ul>
+
+
+        <h1>All Comments for the post</h1>
+        
+        <ul>
+           
+            
+           
+                {{#lost_comment}}
+                   {{#dataValues}}
+                   <p>{{body}}</p>
+                   {{/dataValues}}
+                {{/lost_comment}}
+  
+        </ul>
+        <hr>
+
+
+
+  <body>
+</html>
