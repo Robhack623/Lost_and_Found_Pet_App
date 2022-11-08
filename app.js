@@ -29,7 +29,7 @@ app.use(session({
 app.use('/uploads', express.static ('uploads'))
 app.use('/css', express.static ('css'))
 
-/*  ------Login-Registration-Logout-AuthenticationMiddleware-Dashboard------ */
+/*  ------Login-Registration-Logout-AuthenticationMiddleware-Dashboard (Rob's Work)------ */
 app.get('/login', (req, res) => {
     res.render('login')
 })
@@ -109,8 +109,8 @@ app.get('/dashboard', authentication, (req, res) =>{
     res.render('dashboard', {username: req.session.username})
 })
 
-/*  ------Found Pages Post/Comment/etc------   */
 
+/*  ------File Upload code (Dmitry's Work)------   */
 
 function uploadFile(req, callback) {
     new formidable.IncomingForm ().parse (req)
@@ -136,6 +136,9 @@ app.post('/upload', (req, res) => {
     })
 })
 
+
+/*  ------Lost Pages Post/Comment/etc (Dmitry's Work)------   */
+
 app.get('/lost_posts', authentication, async (req, res) => {
     res.render('lost_posts')
 })
@@ -160,16 +163,13 @@ app.post ('/add_lost_post', async (req,res)=>{
             pet_pic: uniqueFileName, 
             date_lost: dateLost            
     })
-
     let upload_lost_animal = await lost_animal.save()
     if (upload_lost_animal != null) {
         res.redirect('/lost-animals')
     } else {
         res.alert ( {message: 'Unable to add your animal to a database. Please, try again!'})
     }
-
 })
-
 
 app.get ('/lost-animals', async (req,res) => {
     let lost_animals = await models.lost_post.findAll({})
@@ -179,13 +179,11 @@ app.get ('/lost-animals', async (req,res) => {
         post.comment = filteredComments
     }
     res.render('lost_posts', {allAnimals:lost_animals})
-    
 })
 
 
 app.get ('/postComment/:id', async (req,res) => {
     res.render('add_lost_comment', {id:req.params.id})
-    
 })
 
 app.get('/lost-animals/:id', async (req,res) => {
@@ -196,10 +194,7 @@ app.get('/lost-animals/:id', async (req,res) => {
     for (let post of post_detail) {
         let filteredComments = comments.filter(comment => comment.lost_fk == post.id)
         post.comment = filteredComments}
-    //const comment = await models.lost_comment.findAll({where:{lost_fk:postID}})
-   // let commentsArray = []
-   // comment.forEach(postComment => commentsArray.push(postComment))
-    console.log (post_detail[0].comment)
+
     let allComments = post_detail[0].comment
 
     res.render('all_comments_for_post', {details: post_detail, lost_comment: allComments})
@@ -219,14 +214,12 @@ app.get('/show-comments/:id', async (req,res) => {
             id: postID
         }
     })
-
-    console.log (post.dataValues)
     res.render('all_comments_for_post', post.dataValues)
     
 })
 
 app.post ('/add-comments', async (req, res) =>{
-   // const postID = parseInt(req.params.id)
+
     const {description, id} = req.body
     let comment = await models.lost_comment.build({
         body:description,
@@ -240,6 +233,8 @@ app.post ('/add-comments', async (req, res) =>{
     }
     res.redirect('login')
 })
+
+/*  ------Found Pages Post/Comment/etc(Daniel's Work)------   */
 
 /*   route that is rendering the found_posts page. */
 app.get('/found-posts', async (req, res) => {
@@ -269,7 +264,6 @@ app.post('/found-posts', async (req, res) => {
    await found_animal.save()
    res.redirect('/found-posts')
 })
-
 /* deleting the post from the database. */
 app.post('/delete-post', async(req, res) =>  {
     let {id} = req.body
@@ -279,13 +273,14 @@ app.post('/delete-post', async(req, res) =>  {
 }) 
 
 app.post('/comments', async(req, res) => {
+    
     let {comment,id} = req.body
-
     await models.found_comment.create({body:comment,found_fk:id})
-
     res.redirect('/found-posts')
 })
 
+
+/*  ------Server Stuff------   */
 app.listen(3000,() => {
     console.log('Server is running...')
 })
