@@ -107,15 +107,147 @@ app.post ('/add_lost_post', async (req,res)=>{
     if (upload_lost_animal != null) {
         res.redirect('/lost-animals')
     } else {
-        res.send ( {message: 'Unable to add your animal to a database. Please, try again!'})
+        res.alert ( {message: 'Unable to add your animal to a database. Please, try again!'})
     }
 
 })
 
+
+
 app.get ('/lost-animals', async (req,res) => {
     let lost_animals = await models.lost_post.findAll({})
-    res.render('add_lost_post', {allAnimals:lost_animals})
+    let comments =await models.lost_comment.findAll({})
+    for (let post of lost_animals) {
+        let filteredComments = comments.filter(comment => comment.lost_fk == post.id)
+        post.comment = filteredComments
+    }
+    res.render('lost_posts', {allAnimals:lost_animals})
     
+})
+
+
+app.get ('/postComment/:id', async (req,res) => {
+    res.render('add_lost_comment', {id:req.params.id})
+    
+})
+
+app.get('/lost-animals/:id', async (req,res) => {
+    const postID = req.params.id
+    const post_detail = await models.lost_post.findAll({where: {id:postID}})
+
+    let comments =await models.lost_comment.findAll({})
+    for (let post of post_detail) {
+        let filteredComments = comments.filter(comment => comment.lost_fk == post.id)
+        post.comment = filteredComments}
+    //const comment = await models.lost_comment.findAll({where:{lost_fk:postID}})
+   // let commentsArray = []
+   // comment.forEach(postComment => commentsArray.push(postComment))
+    console.log (post_detail[0].comment)
+    let allComments = post_detail[0].comment
+
+    res.render('all_comments_for_post', {details: post_detail, lost_comment: allComments})
+    
+    
+})
+
+app.get('/show-comments/:id', async (req,res) => {
+    const postID = req.params.id
+    const post = await models.lost_post.findOne({
+        include: [
+            {
+                model: models.lost_comment,
+                as: 'lost_comments'
+            }
+        ],
+        where: {
+            id: postID
+        }
+    })
+
+    console.log (post.dataValues)
+    res.render('all_comments_for_post', post.dataValues)
+    
+})
+
+
+
+/*
+
+app.get('/lost-animals/:id', async (req,res) => {
+    let lost_animals = await models.lost_post.findAll({})
+    const postID = req.params.id
+    const post = await models.lost_post.findOne({
+        include: [
+            {
+                model: models.lost_comment,
+                as: 'lost_comments'
+            }
+        ],
+        where: {
+            id: postID
+        }
+    })
+    console.log (post.dataValues)
+    res.render('add_lost_post', {allAnimals:lost_animals, lost_comments: post.lost_comments})
+    
+})
+*/
+/*
+app.get('/lost-animals/:id', async (req,res) => {
+    let lost_animals = await models.lost_post.findAll({})
+    const postID = req.params.id
+    const post = await models.lost_post.findOne({
+        include: [
+            {
+                model: models.lost_comment,
+                as: 'lost_comments'
+            }
+        ],
+        where: {
+            id: postID
+        }
+    })
+    console.log (post.dataValues)
+    res.render('add_lost_post', {allAnimals:lost_animals, lost_comments: post.dataValues})
+    
+})
+*/
+//res.json(post)
+/*
+app.get('/lost-animals/:id', async (req,res) => {
+    const postID = parseInt(req.params.id)
+    const post = await models.lost_post.findByPk (postID, {
+        include: [
+            {
+                model: models.lost_comment,
+                as: 'lost_comments'
+            }
+        ]
+    })
+    console.log (post)
+    res.render('add_lost_post', post.dataValues)
+    
+})
+*/
+
+
+
+
+
+
+app.post ('/add-comments', async (req, res) =>{
+   // const postID = parseInt(req.params.id)
+    const {description, id} = req.body
+    let comment = await models.lost_comment.build({
+        body:description,
+        lost_fk:parseInt(id)
+    })
+    let savedComment = await comment.save()
+    if(savedComment) {
+        res.redirect(`/lost-animals/${id}`)
+    } else {
+        res.render('add_lost_comments')
+    }
 })
 
 
@@ -137,11 +269,6 @@ app.post('/add-posts', async (req, res) => {
 })
 
 */
-
-
-
-
-
 
 
 
