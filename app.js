@@ -14,27 +14,7 @@ const db = require('./models');
 
 global.__basedir = __dirname
 
-<<<<<<< HEAD
-
-app.post ('/register', async (req, res) =>{
-
-
-    const {username, password } = req.body
-    let salt = await bcrypt.genSalt(10)
-    let hashedPassword = await bcrypt.hash(password, salt)
-    console.log(hashedPassword)
-
-    res.redirect('/login')
-})
-
-app.get('/login', (req, res) =>{
-    res.render('login')
-})
-
-
-=======
 /* mustache engine to be used in the app. */
->>>>>>> main
 app.engine('mustache', mustacheExpress()) 
 app.set('views', './views')
 app.set('view engine', 'mustache')
@@ -165,8 +145,6 @@ app.post ('/add_lost_post', async (req,res)=>{
 
 })
 
-<<<<<<< HEAD
-
 
 app.get ('/lost-animals', async (req,res) => {
     let lost_animals = await models.lost_post.findAll({})
@@ -200,8 +178,7 @@ app.get('/lost-animals/:id', async (req,res) => {
     let allComments = post_detail[0].comment
 
     res.render('all_comments_for_post', {details: post_detail, lost_comment: allComments})
-    
-    
+   
 })
 
 app.get('/show-comments/:id', async (req,res) => {
@@ -277,10 +254,9 @@ app.post('/register', async (req, res) => {
     const {firstName, lastName, email, phoneNumber, zipCode, username, password } = req.body
     let salt = await bcrypt.genSalt(10)
     let hashedPassword = await bcrypt.hash(password, salt)
->>>>>>> main
     
 })
-*/
+
 //res.json(post)
 /*
 app.get('/lost-animals/:id', async (req,res) => {
@@ -301,9 +277,6 @@ app.get('/lost-animals/:id', async (req,res) => {
 
 
 
-<<<<<<< HEAD
-
-
 
 app.post ('/add-comments', async (req, res) =>{
    // const postID = parseInt(req.params.id)
@@ -318,7 +291,6 @@ app.post ('/add-comments', async (req, res) =>{
     } else {
         res.render('add_lost_comments')
     }
-=======
     res.redirect('login')
 })
 
@@ -328,7 +300,6 @@ app.get('/found-posts', async (req, res) => {
     let comments = await models.found_comment.findAll({})
     
     res.render('found_posts', {result:result, comments:comments})
->>>>>>> main
 })
 /*  a route that is rendering the found_posts page. */
 app.post('/found-posts', async (req, res) => {
@@ -360,28 +331,8 @@ app.post('/delete-post', async(req, res) =>  {
     res.redirect('/found-posts')
 }) 
 
-<<<<<<< HEAD
-/*
-app.post('/add-posts', async (req, res) => {
-    const {title, description, createdName, published } = req.body 
-
-     // create the movie object 
-    const post = models.Post.build({
-        title: title, 
-        description: description, 
-        created: createdName, 
-        published: published
-    })
-    // save the movie 
-    await post.save()
-    res.redirect ('/')
-})
-
-*/
-=======
 app.post('/comments', async(req, res) => {
     let {comment,id} = req.body
->>>>>>> main
 
     await models.found_comment.create({body:comment,found_fk:id})
 
