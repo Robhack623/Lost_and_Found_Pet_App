@@ -33,7 +33,7 @@ app.use('/uploads', express.static ('uploads'))
 app.use('/css', express.static ('css'))
 
 app.get('/found_posts', async (req, res) => {
-let result = await models.found_animal.findAll({})
+    let result = await models.found_animal.findAll({})
     res.render('found_posts', {result:result})
 })
 
@@ -42,15 +42,12 @@ app.get('/login', (req, res) => {
 })
 
 app.post('/login', async (req, res) => {
-
     const {username, password } = req.body
-
     const user = await models.user.findOne({
         where: {
             username: username
         }
     })
-
     if(user){
         const result = await bcrypt.compare(password, user.password)
         if(result) {
@@ -63,8 +60,11 @@ app.post('/login', async (req, res) => {
         
         res.render('login', {errorMessage: 'Invalid username or password'})
     }}
+})
 
-
+app.get('/logout', authentication, (req,res)=>{
+    req.session.destroy()
+    res.redirect('login')
 })
 
 app.get('/dashboard', authentication, (req, res) =>{
@@ -175,7 +175,7 @@ app.get('/found-posts', async (req, res) => {
     let result = await models.found_post.findAll({})
     let comments = await models.found_comment.findAll({})
     
-        res.render('found_posts', {result:result, comments:comments})
+    res.render('found_posts', {result:result, comments:comments})
 })
 /*  a route that is rendering the found_posts page. */
 app.post('/found-posts', async (req, res) => {

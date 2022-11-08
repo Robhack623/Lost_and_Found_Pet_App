@@ -63,44 +63,5 @@
             <button>Add comment</button>
             </form>       
 
-         <h1>Found Pets</h1><hr>
-         <form method="POST" action="/found_posts">
-            <input type="text" placeholder="species" name="species" />    
-            <input type="text" placeholder="color" name="color" /> 
-            <input type="text" placeholder="breed" name="breed" />
-            <input type="text" placeholder="gender" name="gender" />
-            <input type="text" placeholder="name" name="name" />
-            <input type="text" placeholder="size" name="size" />
-            <input type="text" placeholder="age" name="age" />
-            <input type="text" placeholder="location" name="location" />
-            <input type="text" placeholder="description" name="description" />
-            <input type="text" placeholder="picture" name="picture" />
-            <input type="text" placeholder=date_found name="date_found" />
-            <button>Save</button>
-            <br>
-
-            <ul>
-            {{#result}}
-             <h2>{{species}}</h2>
-             <h2>{{color}}</h2>
-             <h2>{{breed}} </h2>
-             <h2>{{gender}} </h2>
-             <h2>{{name}} </h2>
-             <h2>{{size}} </h2>
-             <h2>{{age}} </h2>
-             <h2>{{location}} </h2>
-             <h2>{{description}} </h2>
-             <h2>{{date_lost}} </h2>
-
-
-            {{/result}}
-
-        </ul>
-
-
-
-
-        </form>
-
     </body>
 </html>
