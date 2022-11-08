@@ -14,27 +14,7 @@ const db = require('./models');
 
 global.__basedir = __dirname
 
-<<<<<<< HEAD
-
-app.post ('/register', async (req, res) =>{
-
-
-    const {username, password } = req.body
-    let salt = await bcrypt.genSalt(10)
-    let hashedPassword = await bcrypt.hash(password, salt)
-    console.log(hashedPassword)
-
-    res.redirect('/login')
-})
-
-app.get('/login', (req, res) =>{
-    res.render('login')
-})
-
-
-=======
 /* mustache engine to be used in the app. */
->>>>>>> main
 app.engine('mustache', mustacheExpress()) 
 app.set('views', './views')
 app.set('view engine', 'mustache')
@@ -139,7 +119,7 @@ app.get('/add_lost_post', authentication, async (req,res)=>{
     res.render('add_lost_post')
 })
 
-app.post ('/add_lost_post', async (req,res)=>{
+app.post ('/add_lost_post',  async (req,res)=>{
     let {species, color, breed, gender, name, size, age, zipCode, description, dateLost } =  req.body.species  
 
     let lost_animal = models.lost_post.build ({
@@ -165,7 +145,6 @@ app.post ('/add_lost_post', async (req,res)=>{
 
 })
 
-<<<<<<< HEAD
 
 
 app.get ('/lost-animals', async (req,res) => {
@@ -180,7 +159,7 @@ app.get ('/lost-animals', async (req,res) => {
 })
 
 
-app.get ('/postComment/:id', async (req,res) => {
+app.get ('/postComment/:id',authentication, async (req,res) => {
     res.render('add_lost_comment', {id:req.params.id})
     
 })
@@ -225,87 +204,7 @@ app.get('/show-comments/:id', async (req,res) => {
 
 
 
-/*
-
-app.get('/lost-animals/:id', async (req,res) => {
-    let lost_animals = await models.lost_post.findAll({})
-    const postID = req.params.id
-    const post = await models.lost_post.findOne({
-        include: [
-            {
-                model: models.lost_comment,
-                as: 'lost_comments'
-            }
-        ],
-        where: {
-            id: postID
-        }
-    })
-    console.log (post.dataValues)
-    res.render('add_lost_post', {allAnimals:lost_animals, lost_comments: post.lost_comments})
-    
-})
-*/
-/*
-app.get('/lost-animals/:id', async (req,res) => {
-    let lost_animals = await models.lost_post.findAll({})
-    const postID = req.params.id
-    const post = await models.lost_post.findOne({
-        include: [
-            {
-                model: models.lost_comment,
-                as: 'lost_comments'
-            }
-        ],
-        where: {
-            id: postID
-        }
-    })
-    console.log (post.dataValues)
-    res.render('add_lost_post', {allAnimals:lost_animals, lost_comments: post.dataValues})
-=======
-app.get ('/lost-animals', authentication, async (req,res) => {
-    let lost_animals = await models.Lost_Page.findAll({})
-    res.render('add_lost_post', {allAnimals:lost_animals})
-})
-
-app.get('/register', (req, res) => {
-    res.render('register')
-})
-
-app.post('/register', async (req, res) => {
-    const {firstName, lastName, email, phoneNumber, zipCode, username, password } = req.body
-    let salt = await bcrypt.genSalt(10)
-    let hashedPassword = await bcrypt.hash(password, salt)
->>>>>>> main
-    
-})
-*/
-//res.json(post)
-/*
-app.get('/lost-animals/:id', async (req,res) => {
-    const postID = parseInt(req.params.id)
-    const post = await models.lost_post.findByPk (postID, {
-        include: [
-            {
-                model: models.lost_comment,
-                as: 'lost_comments'
-            }
-        ]
-    })
-    console.log (post)
-    res.render('add_lost_post', post.dataValues)
-    
-})
-*/
-
-
-
-<<<<<<< HEAD
-
-
-
-app.post ('/add-comments', async (req, res) =>{
+app.post ('/add-comments', authentication, async (req, res) =>{
    // const postID = parseInt(req.params.id)
     const {description, id} = req.body
     let comment = await models.lost_comment.build({
@@ -318,9 +217,10 @@ app.post ('/add-comments', async (req, res) =>{
     } else {
         res.render('add_lost_comments')
     }
-=======
-    res.redirect('login')
 })
+
+
+
 
 /*   route that is rendering the found_posts page. */
 app.get('/found-posts', async (req, res) => {
@@ -328,7 +228,6 @@ app.get('/found-posts', async (req, res) => {
     let comments = await models.found_comment.findAll({})
     
     res.render('found_posts', {result:result, comments:comments})
->>>>>>> main
 })
 /*  a route that is rendering the found_posts page. */
 app.post('/found-posts', async (req, res) => {
@@ -360,28 +259,8 @@ app.post('/delete-post', async(req, res) =>  {
     res.redirect('/found-posts')
 }) 
 
-<<<<<<< HEAD
-/*
-app.post('/add-posts', async (req, res) => {
-    const {title, description, createdName, published } = req.body 
-
-     // create the movie object 
-    const post = models.Post.build({
-        title: title, 
-        description: description, 
-        created: createdName, 
-        published: published
-    })
-    // save the movie 
-    await post.save()
-    res.redirect ('/')
-})
-
-*/
-=======
 app.post('/comments', async(req, res) => {
     let {comment,id} = req.body
->>>>>>> main
 
     await models.found_comment.create({body:comment,found_fk:id})
 
