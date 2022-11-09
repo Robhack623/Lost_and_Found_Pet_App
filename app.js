@@ -1,8 +1,6 @@
-
 /* This is importing the necessary packages to run the app. */
 const express = require('express')
 const app = express()
-
 const mustacheExpress = require('mustache-express')
 var bcrypt = require('bcryptjs');
 var session = require('express-session')
@@ -11,12 +9,14 @@ const { Op } = require('sequelize')
 const formidable = require ('formidable')
 const {v4:uuidv4} = require ('uuid') 
 const db = require('./models');
+const path = require ('path')
 
 global.__basedir = __dirname
+const VIEWS_PATH = path.join(__dirname, '/views')
 
 /* mustache engine to be used in the app. */
-app.engine('mustache', mustacheExpress()) 
-app.set('views', './views')
+app.engine('mustache', mustacheExpress(VIEWS_PATH + '/partials','.mustache')) 
+app.set('views', VIEWS_PATH)
 app.set('view engine', 'mustache')
 app.use(express.urlencoded())
 
@@ -28,15 +28,10 @@ app.use(session({
 }))
 
 /*  a route that is rendering the found_posts page. */
-
 app.use('/uploads', express.static ('uploads'))
 app.use('/css', express.static ('css'))
 
-app.get('/found_posts', async (req, res) => {
-    let result = await models.found_animal.findAll({})
-    res.render('found_posts', {result:result})
-})
-
+/*  ------Login-Registration-Logout-AuthenticationMiddleware-Dashboard (Rob's Work)------ */
 app.get('/login', (req, res) => {
     res.render('login')
 })
@@ -67,13 +62,6 @@ app.get('/logout', authentication, (req,res)=>{
     res.redirect('login')
 })
 
-app.get('/dashboard', authentication, (req, res) =>{
-    const username = req.session.username 
-    console.log('Hello, ' + username)
-
-    res.render('dashboard', {username: req.session.username})
-})
-
 function authentication(req, res, next) {
     if(req.session) {
         if(req.session.username) {
@@ -86,6 +74,45 @@ function authentication(req, res, next) {
     }
 }
 
+app.get('/register', (req, res) => {
+    res.render('register')
+})
+
+app.post('/register', async (req, res) => {
+    const {firstName, lastName, email, phoneNumber, zipCode, username, password } = req.body
+    let salt = await bcrypt.genSalt(10)
+    let hashedPassword = await bcrypt.hash(password, salt)
+    
+    const user = await models.user.create({
+        first_name:firstName, last_name:lastName, email:email, phone_number:phoneNumber, zip_code:zipCode, username:username, password:hashedPassword
+    })
+
+    let user_upload = await user.save()
+
+    console.log(user_upload)
+
+    res.redirect('login')
+})
+
+app.get('/dashboard', authentication, (req, res) =>{
+    const username = req.session.username 
+    res.render('dashboard', {username: req.session.username})
+})
+
+app.get('/found_posts', async (req, res) => {
+    let result = await models.found_animal.findAll({})
+    res.render('found_posts', {result:result})
+})
+
+app.get('/dashboard', authentication, (req, res) =>{
+    const username = req.session.username 
+    console.log('Hello, ' + username)
+
+    res.render('dashboard', {username: req.session.username})
+})
+
+
+/*  ------File Upload code (Dmitry's Work)------   */
 
 function uploadFile(req, callback) {
     new formidable.IncomingForm ().parse (req)
@@ -111,6 +138,9 @@ app.post('/upload', (req, res) => {
     })
 })
 
+
+/*  ------Lost Pages Post/Comment/etc (Dmitry's Work)------   */
+
 app.get('/lost_posts', authentication, async (req, res) => {
     res.render('lost_posts')
 })
@@ -135,14 +165,12 @@ app.post ('/add_lost_post',  async (req,res)=>{
             pet_pic: uniqueFileName, 
             date_lost: dateLost            
     })
-
     let upload_lost_animal = await lost_animal.save()
     if (upload_lost_animal != null) {
         res.redirect('/lost-animals')
     } else {
         res.alert ( {message: 'Unable to add your animal to a database. Please, try again!'})
     }
-
 })
 
 
@@ -155,13 +183,11 @@ app.get ('/lost-animals', async (req,res) => {
         post.comment = filteredComments
     }
     res.render('lost_posts', {allAnimals:lost_animals})
-    
 })
 
 
 app.get ('/postComment/:id',authentication, async (req,res) => {
     res.render('add_lost_comment', {id:req.params.id})
-    
 })
 
 app.get('/lost-animals/:id', async (req,res) => {
@@ -172,15 +198,11 @@ app.get('/lost-animals/:id', async (req,res) => {
     for (let post of post_detail) {
         let filteredComments = comments.filter(comment => comment.lost_fk == post.id)
         post.comment = filteredComments}
-    //const comment = await models.lost_comment.findAll({where:{lost_fk:postID}})
-   // let commentsArray = []
-   // comment.forEach(postComment => commentsArray.push(postComment))
-    console.log (post_detail[0].comment)
+
     let allComments = post_detail[0].comment
 
     res.render('all_comments_for_post', {details: post_detail, lost_comment: allComments})
-    
-    
+   
 })
 
 app.get('/show-comments/:id', async (req,res) => {
@@ -196,16 +218,17 @@ app.get('/show-comments/:id', async (req,res) => {
             id: postID
         }
     })
-
-    console.log (post.dataValues)
     res.render('all_comments_for_post', post.dataValues)
     
 })
 
 
 
-app.post ('/add-comments', authentication, async (req, res) =>{
+
    // const postID = parseInt(req.params.id)
+
+app.post ('/add-comments', async (req, res) =>{
+
     const {description, id} = req.body
     let comment = await models.lost_comment.build({
         body:description,
@@ -217,10 +240,10 @@ app.post ('/add-comments', authentication, async (req, res) =>{
     } else {
         res.render('add_lost_comments')
     }
+    res.redirect('login')
 })
 
-
-
+/*  ------Found Pages Post/Comment/etc(Daniel's Work)------   */
 
 /*   route that is rendering the found_posts page. */
 app.get('/found-posts', async (req, res) => {
@@ -250,7 +273,6 @@ app.post('/found-posts', async (req, res) => {
    await found_animal.save()
    res.redirect('/found-posts')
 })
-
 /* deleting the post from the database. */
 app.post('/delete-post', async(req, res) =>  {
     let {id} = req.body
@@ -260,13 +282,15 @@ app.post('/delete-post', async(req, res) =>  {
 }) 
 
 app.post('/comments', async(req, res) => {
+    
     let {comment,id} = req.body
 
     await models.found_comment.create({body:comment,found_fk:id})
-
     res.redirect('/found-posts')
 })
 
+
+/*  ------Server Stuff------   */
 app.listen(3000,() => {
     console.log('Server is running...')
 })

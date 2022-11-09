@@ -1,31 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="theme-color" content="black">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
-    <title>Name of site?!?</title>
-    <link rel="icon" type="image/x-icon" href="images/ghost-logo-black-background.jpg"/>
-    <link rel="stylesheet" href="css/styles.css">
+    {{> header}}
 </head>
 <body>
-    <div class="header">
-        <div class="logo-container">LOGO GOES HERE
-        </div>
-        <div class="secondary-header">
-            <div class="second-header-center">
-                <div class="secondary-header">
-                    <h1>Welcome, {{username}}</h1>
-                    <mat-divider role="separator" vertical class="vertical-divider"></mat-divider>
-                    <div class="dashboard-link" onclick="window.location.href='http://localhost:3000/dashboard'">Dashboard</div>
-                    <div class="logout-link"><a class="logout-link" href="/logout">Log Out</a></div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="main-body">
+  {{> menu}}
 
 
 
