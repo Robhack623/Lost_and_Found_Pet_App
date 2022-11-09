@@ -6,10 +6,14 @@
   </head>
   <body>
     {{> menu}}
+    <button onclick = "window.location.href='http://localhost:3000/add_lost_post'">Add your post</button>
      <div class = "view_all_animals">
         <ul>
             {{#allAnimals}}
               <img src = "/uploads/{{pet_pic}}" class ="list-animals" />
+              <button onclick = "window.location.href='http://localhost:3000/lost-animals/{{id}}'">Post Comments</button>
+              
+              <button onclick = "window.location.href='http://localhost:3000/postComment/{{id}}'">Add Comment</button>
               <h3>{{species}}</h3>
               <h3>{{color}}</h3>
               <h3>{{breed}} </h3>
@@ -21,16 +25,16 @@
               <p>{{description}} </p>
               <h3>{{date_lost}} </h3>
               
-              <button onclick = "window.location.href='http://localhost:3000/lost-animals/{{id}}'">See all comments</button>
-              
-              <button onclick = "window.location.href='http://localhost:3000/postComment/{{id}}'">Comment</button>
+            
               <ul>
+                  <h2>Recent comments</h2>
                   {{#comment}}
                       <p>{{body}}</p>
                   {{/comment}}
               </ul>
             
             {{/allAnimals}}
+      </div>
            
 
 
