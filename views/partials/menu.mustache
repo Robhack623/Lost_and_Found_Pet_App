@@ -1,16 +1,31 @@
-  <div class="header">
-        <div class="logo-container">LOGO GOES HERE
-        </div>
-        <div class="secondary-header">
-            <div class="second-header-center">
-                <div class="secondary-header">
-                    <h1>Welcome, {{username}}</h1>
-                    <mat-divider role="separator" vertical class="vertical-divider"></mat-divider>
-                    <div class="dashboard-link" onclick="window.location.href='http://localhost:3000/dashboard'">Dashboard</div>
-                    <div class="logout-link"><a class="logout-link" href="/logout">Log Out</a></div>
-                </div>
+<div class="header">
+    <div class="logo-container">
+    <div class="logout-link"><a class="logout-link" href="/logout"><p>Log Out<p></a></div>
+    </div>
+    <div class="secondary-header">
+
+            <div class="logo-header"><img src="/styles_images/lflogo.png" class="logo-header"></div>
+            <div class="secondary-header2">
+                <h1>Let's reunite your family</h1>
+                <mat-divider role="separator" vertical class="vertical-divider"></mat-divider>
+                <div class="dashboard-link" onclick="window.location.href='http://localhost:3000/dashboard'">Dashboard</div>
+                <div class = "dashboard-link view-posts" onclick="window.location.href='http://localhost:3000/my_posts/:{{userId}}'">View My Posts</div>    
             </div>
+            <div class="make-right"></div>
+
+    </div>
+    <div class="top-bar-buttons">
+        <div class="lost-button">
+        <button type="button" class="link-buttons" role="button" onclick="window.location.href='http://localhost:3000/lost-animals'">
+            <div>Lost Animals</div>
+        </button>
+        </div>
+        <div class="found-button">
+        <button type="button" class="link-buttons" role="button" onclick="window.location.href='http://localhost:3000/found-posts'">
+                <div>Found Animals</div>
+        </button>
         </div>
     </div>
-    <div class="main-body">
-    </div>
+</div>
+
+<img src="/fjioewfjoiew"
