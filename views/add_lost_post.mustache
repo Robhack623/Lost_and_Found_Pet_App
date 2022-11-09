@@ -6,19 +6,7 @@
         <h1>Lost Pets</h1>
         <hr>   
 
-        <h2>Please, download a picture of your pet:</h2>
-        <form action = "/upload" method ="POST" enctype ="multipart/form-data">
-        <label>Picture of your animal</label>
-        <input type="file" name="photo" />
-        <button type="submit">Upload</button>
-        </form>
-
-
-        <div class="pet-preview-image">
-        
-        <img src = "{{imageURL}}" class ="{{className}}"/>
-        </div>
-
+      
         <form method = "POST" action = "/add_lost_post">
             <h2>Please, let us know who was lost:</h2>
             <input type = "text" placeHolder = "Dog/Cat" name = "species" />
@@ -31,30 +19,25 @@
             <input type = "text" placeHolder = "Zip Code" name = "zipCode" />
             <input type = "text" placeHolder = "Any other detail" name = "description" />
             <input type = "date" placeHolder = "Date your pet was lost" name = "dateLost" />
-            <button>Submit</button>
+            <button>Submit</button>   
         </form>
-        <hr>
+        <br>
 
+        <h2>Please, download a picture of your pet:</h2>
+        <form action = "/upload" method ="POST" enctype ="multipart/form-data">
+        <label>Picture of your animal</label>
+        <input type="file" name="photo" />
+        <button type="submit">Upload</button>
+        </form>
+
+
+        <div class="pet-preview-image">
         
+        <img src = "{{imageURL}}" class ="{{className}}"/>
+        </div>
+  
 
-
-        <ul>
-            {{#allAnimals}}
-             <img src = "/uploads/{{pet_pic}}" class ="list-animals" />
-             <h2>{{species}}</h2>
-             <h2>{{color}}</h2>
-             <h2>{{breed}} </h2>
-             <h2>{{gender}} </h2>
-             <h2>{{name}} </h2>
-             <h2>{{size}} </h2>
-             <h2>{{age}} </h2>
-             <h2>{{zip_code}} </h2>
-             <p>{{description}} </p>
-             <h2>{{date_lost}} </h2>
-
-            {{/allAnimals}}
-
-        </ul>
+      
 
 
 
