@@ -28,7 +28,7 @@ app.use(session({
 }))
 
 /*  a route that is rendering the found_posts page. */
-
+app.use('/site_images', express.static ('site_images'))
 app.use('/uploads', express.static ('uploads'))
 app.use('/css', express.static ('css'))
 
