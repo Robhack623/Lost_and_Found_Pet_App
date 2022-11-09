@@ -96,7 +96,9 @@ app.post('/register', async (req, res) => {
 
 app.get('/dashboard', authentication, (req, res) =>{
     const username = req.session.username 
-    res.render('dashboard', {username: req.session.username})
+    const userId = req.session.userId
+
+    res.render('dashboard', {username: req.session.username, userId: req.session.userId})
 })
 
 app.get('/found_posts', async (req, res) => {
@@ -141,6 +143,14 @@ app.post('/upload', (req, res) => {
 
 /*  ------Lost Pages Post/Comment/etc (Dmitry's Work)------   */
 
+app.get('/my_posts/:userId', authentication, async (req, res) => {
+    
+    const userId = req.session.userId
+    const post_detail_lost = await models.lost_post.findAll({where: {user_fk:userId}})
+    const post_detail_found = await models.found_post.findAll({where: {user_fk:userId}})
+    res.render('my_posts', {myPostsLost: post_detail_lost, myPostsFound: post_detail_found})
+})
+
 app.get('/lost_posts', authentication, async (req, res) => {
     res.render('lost_posts')
 })
@@ -150,6 +160,9 @@ app.get('/add_lost_post', authentication, async (req,res)=>{
 })
 
 app.post ('/add_lost_post',  async (req,res)=>{
+     
+    const userId = req.session.userId
+    
     let {species, color, breed, gender, name, size, age, zipCode, description, dateLost } =  req.body.species  
 
     let lost_animal = models.lost_post.build ({
@@ -163,7 +176,8 @@ app.post ('/add_lost_post',  async (req,res)=>{
             zip_code: zipCode, 
             description: description, 
             pet_pic: uniqueFileName, 
-            date_lost: dateLost            
+            date_lost: dateLost,
+            user_fk: userId            
     })
     let upload_lost_animal = await lost_animal.save()
     if (upload_lost_animal != null) {
@@ -176,6 +190,10 @@ app.post ('/add_lost_post',  async (req,res)=>{
 
 
 app.get ('/lost-animals', async (req,res) => {
+    
+    const username = req.session.username 
+    const userId = req.session.userId
+    
     let lost_animals = await models.lost_post.findAll({})
     let comments =await models.lost_comment.findAll({})
     for (let post of lost_animals) {
@@ -186,11 +204,17 @@ app.get ('/lost-animals', async (req,res) => {
 })
 
 
-app.get ('/postComment/:id',authentication, async (req,res) => {
+app.get ('/postComment/:id', authentication, async (req,res) => {
+    const username = req.session.username 
+    const userId = req.session.userId
+    
     res.render('add_lost_comment', {id:req.params.id})
 })
 
-app.get('/lost-animals/:id', async (req,res) => {
+app.get('/lost-animals/:id', authentication, async (req,res) => {
+    const username = req.session.username 
+    const userId = req.session.userId
+
     const postID = req.params.id
     const post_detail = await models.lost_post.findAll({where: {id:postID}})
 
@@ -205,7 +229,10 @@ app.get('/lost-animals/:id', async (req,res) => {
    
 })
 
-app.get('/show-comments/:id', async (req,res) => {
+app.get('/show-comments/:id', authentication, async (req,res) => {
+    const username = req.session.username 
+    const userId = req.session.userId
+    
     const postID = req.params.id
     const post = await models.lost_post.findOne({
         include: [
@@ -227,7 +254,9 @@ app.get('/show-comments/:id', async (req,res) => {
 
    // const postID = parseInt(req.params.id)
 
-app.post ('/add-comments', async (req, res) =>{
+app.post ('/add-comments', authentication, async (req, res) =>{
+    const username = req.session.username 
+    const userId = req.session.userId
 
     const {description, id} = req.body
     let comment = await models.lost_comment.build({
@@ -246,6 +275,9 @@ app.post ('/add-comments', async (req, res) =>{
 
 /*   route that is rendering the found_posts page. */
 app.get('/found-posts', async (req, res) => {
+    const username = req.session.username 
+    const userId = req.session.userId
+    
     let result = await models.found_post.findAll({})
     let comments = await models.found_comment.findAll({})
     for (let post of result) {
@@ -256,7 +288,10 @@ app.get('/found-posts', async (req, res) => {
     res.render('found_posts', {result:result, comments:comments})
 })
 /*  a route that is rendering the found_posts page. */
-app.post('/found-posts', async (req, res) => {
+app.post('/found-posts', authentication, async (req, res) => {
+
+    const username = req.session.username 
+    const userId = req.session.userId
 
     let {species, color, breed, gender, name, size, age, location, description, date_found} = req.body    
 
