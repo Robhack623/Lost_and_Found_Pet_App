@@ -174,8 +174,13 @@ app.post('/register', async (req, res) => {
 app.get('/found-posts', async (req, res) => {
     let result = await models.found_post.findAll({})
     let comments = await models.found_comment.findAll({})
-    
-    res.render('found_posts', {result:result, comments:comments})
+    for (let post of result) {
+        let filteredComments = comments.filter(comment => comment.found_fk == post.id)
+        post.comment = filteredComments
+        console.log(comments)
+    }
+    console.log(result)
+    res.render('found_posts', {result:result, comments:result.comment})
 })
 /*  a route that is rendering the found_posts page. */
 app.post('/found-posts', async (req, res) => {
