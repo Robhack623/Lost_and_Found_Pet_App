@@ -55,7 +55,7 @@ app.post('/login', async (req, res) => {
                 req.session.userId = user.id
                 req.session.username = user.username 
             }
-            res.redirect('dashboard')
+            res.redirect('dashboard/:usename')
         } else {
         
         res.render('login', {errorMessage: 'Invalid username or password'})
@@ -67,9 +67,13 @@ app.get('/logout', authentication, (req,res)=>{
     res.redirect('login')
 })
 
-app.get('/dashboard', authentication, (req, res) =>{
+app.get('/dashboard', (req, res) =>{
+    res.render('dashboard')
+})
+
+app.get('/dashboard/:username', authentication, (req, res) =>{
     const username = req.session.username 
-    console.log('Hello, ' + username)
+    const name = req.params.username
 
     res.render('dashboard', {username: req.session.username})
 })
