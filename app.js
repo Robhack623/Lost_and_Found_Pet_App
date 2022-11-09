@@ -240,7 +240,6 @@ app.post ('/add-comments', async (req, res) =>{
     } else {
         res.render('add_lost_comments')
     }
-    
 })
 
 /*  ------Found Pages Post/Comment/etc(Daniel's Work)------   */
