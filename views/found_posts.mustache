@@ -5,7 +5,10 @@
      <link rel ="stylesheet" href="/css/foundPost.css"></link>
     </head>
     <body>
-       
+    <br>   
+    <button onclick="window.location.href='http://localhost:3000/register'">Register</button>
+     <button onclick="window.location.href='http://localhost:3000/lost_posts'">Go to lost posts</button>
+
 
          <h1 class = "Found">Found Pets 🐾 </h1><hr>
          <form method="POST" action="/found-posts">
@@ -48,8 +51,10 @@
              <li>Date:{{date_lost}} </li>
              
        {{! {{#found_post}} 
-       {{#comment}}
+         {{#comment}}
                    <p>{{body}}</p> 
+                   <form method='POST' action='/deleteFoundPost/{{id}}'>
+                   <button>Delete comment</button>
                 {{/comment}}
   {{! {{/found_post}} 
               
