@@ -2,14 +2,14 @@
 <html>
 
     <head>
-     
+     <link rel ="stylesheet" href="/css/foundPost.css"></link>
     </head>
     <body>
        
 
-         <h1>Found Pets 🐾 </h1><hr>
+         <h1 class = "Found">Found Pets 🐾 </h1><hr>
          <form method="POST" action="/found-posts">
-            <p>Species</p>
+            <p class = "p">Species</p>
             <input type="text" placeholder="Species" name="species" /> 
             <p>Color</p>
             <input type="text" placeholder="Color" name="color" /> 
@@ -27,13 +27,11 @@
             <input type="text" placeholder="Location" name="location" />
             <p>Description</p>
             <input type="text" placeholder="Description" name="description" />
-            <p>Picture</p>
-            <input type="text" placeholder="Picture" name="picture" />
             <p>Date found</p>
             <input type="text" placeholder=Datefound name="date_found" />
             <button>Save</button>
-            </form>
-               
+            </form> 
+               <hr>
                
       
             <ul>
@@ -49,9 +47,12 @@
              <li>Description:{{description}} </li>
              <li>Date:{{date_lost}} </li>
              
-              {{#comments}}
-        Comments: {{body}}
-        {{/comments}} 
+       {{! {{#found_post}} 
+       {{#comment}}
+                   <p>{{body}}</p> 
+                {{/comment}}
+  {{! {{/found_post}} 
+              
              <h1>------------</h1>
              <form method="POST" action = "/delete-post">
              <input type = "hidden" name =id value={{id}} /> 
@@ -62,7 +63,8 @@
             <input type ="text" placeholder = "Comments" name ="comment" />
             <input type = "hidden" name=id value={{id}} /> 
             <button>Add comment</button>
-            </form>       
+            </form>      
+            <hr> 
         {{/result}}
     </body>
 </html>

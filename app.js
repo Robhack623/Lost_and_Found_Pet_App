@@ -243,10 +243,9 @@ app.get('/found-posts', async (req, res) => {
     for (let post of result) {
         let filteredComments = comments.filter(comment => comment.found_fk == post.id)
         post.comment = filteredComments
-        console.log(comments)
     }
     console.log(result)
-    res.render('found_posts', {result:result, comments:result.comment})
+    res.render('found_posts', {result:result, comments:comments})
 })
 /*  a route that is rendering the found_posts page. */
 app.post('/found-posts', async (req, res) => {
@@ -288,4 +287,4 @@ app.post('/comments', async(req, res) => {
 /*  ------Server Stuff------   */
 app.listen(3000,() => {
     console.log('Server is running...')
-})
+})            
