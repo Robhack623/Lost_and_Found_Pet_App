@@ -283,8 +283,15 @@ app.post('/comments', async(req, res) => {
     res.redirect('/found-posts')
 })
 
+app.post('/deleteFoundPost/:id', async(req, res) => {
+    
+    let {id} = req.params
+
+    await models.found_comment.destroy({where:{id:id}})
+    res.redirect('/found-posts')
+})
 
 /*  ------Server Stuff------   */
 app.listen(3000,() => {
     console.log('Server is running...')
-})            
+})               
