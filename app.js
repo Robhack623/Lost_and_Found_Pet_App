@@ -126,10 +126,12 @@ function uploadFile(req, callback) {
         console.log(file)
 
     })
+    /*
     .on ('file', (name, file) => {
         callback(file.name)
 
     })
+    */
 }
 
 app.post('/upload', (req, res) => {
@@ -148,8 +150,41 @@ app.get('/my_posts/:userId', authentication, async (req, res) => {
     const userId = req.session.userId
     const post_detail_lost = await models.lost_post.findAll({where: {user_fk:userId}})
     const post_detail_found = await models.found_post.findAll({where: {user_fk:userId}})
-    res.render('my_posts', {myPostsLost: post_detail_lost, myPostsFound: post_detail_found})
+    let comments =await models.lost_comment.findAll({})
+    for (let post of post_detail_lost) {
+        let filteredComments = comments.filter(comment => comment.lost_fk == post.id)
+        post.comment = filteredComments
+    }
+    res.render('my_posts', {myPostsLost: post_detail_lost, myPostsFound:post_detail_found })
 })
+
+
+app.post('/delete-MyLostPost', async(req, res) =>  {
+    let {id} = req.body
+    console.log(req.body)
+    await models.lost_post.destroy({where:{id:parseInt(id)}})
+    res.redirect(`/my_posts/${req.session.userId}`)
+}) 
+
+app.post('/deleteMyLostComment/:id', async(req, res) => {  
+    let {id} = req.params
+    await models.lost_comment.destroy({where:{id:id}})
+    res.redirect(`/my_posts/${req.session.userId}`)
+})
+app.post('/delete-MyFoundPost', async(req, res) =>  {
+    let {id} = req.body
+    console.log(req.body)
+    await models.found_post.destroy({where:{id:parseInt(id)}})
+    res.redirect(`/my_posts/${req.session.userId}`)
+}) 
+
+app.post('/deleteMyFoundComment/:id', async(req, res) => {  
+    let {id} = req.params
+    await models.found_comment.destroy({where:{id:id}})
+    res.redirect(`/my_posts/${req.session.userId}`)
+})
+
+
 
 app.get('/lost_posts', authentication, async (req, res) => {
     res.render('lost_posts')
@@ -163,9 +198,11 @@ app.post ('/add_lost_post',  async (req,res)=>{
      
     const userId = req.session.userId
     
-    let {species, color, breed, gender, name, size, age, zipCode, description, dateLost } =  req.body.species  
+    let {species, color, breed, gender, name, size, age, zipCode, description, dateLost } =  req.body 
+    console.log(req.body, "This is test")
+   
 
-    let lost_animal = models.lost_post.build ({
+    let lost_animal = await models.lost_post.build ({
             species: species, 
             color: color,
             breed: breed,
@@ -177,8 +214,10 @@ app.post ('/add_lost_post',  async (req,res)=>{
             description: description, 
             pet_pic: uniqueFileName, 
             date_lost: dateLost,
-            user_fk: userId            
+            user_fk: userId  
+                      
     })
+    
     let upload_lost_animal = await lost_animal.save()
     if (upload_lost_animal != null) {
         res.redirect('/lost-animals')
@@ -338,4 +377,4 @@ app.post('/deleteFoundPost/:id', async(req, res) => {
 /*  ------Server Stuff------   */
 app.listen(3000,() => {
     console.log('Server is running...')
-})               
+})

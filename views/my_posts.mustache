@@ -1,7 +1,66 @@
-{{#myPostsLost}}
+<html>
+  <head>
+    <link rel ="stylesheet" href="/css/lostPage.css"></link>
+  </head>
+  <body>
 
-{{user_fk}}
+   <button onclick = "window.location.href='http://localhost:3000/dashboard'">Go to Main</button>
 
-<img src = "/uploads/{{pet_pic}}" />
+        <h1>Lost Posts</h1>
 
-{{/myPostsLost}}
+                {{#myPostsLost}}
+
+                   <b>{{user_fk}}</b>
+                    <li>Species:{{species}}</li>
+                    <li>Breed:{{breed}}</li>
+                    <li>Description:{{description}}</li>
+                    <li>Color:{{color}}</li>
+            
+            
+                    <img src = "/uploads/{{pet_pic}}" class = "my_post_image" />
+                    <form method="POST" action = "/delete-MyLostPost">
+                        <input type = "hidden" name = "id" value={{id}} /> 
+                        <button>Delete post</button>
+                    </form>
+                    <ul>
+                        <h2>Comments</h2>
+                        {{#comment}}
+                            <p>{{body}}</p>
+                            <form method='POST' action='/deleteMyLostComment/{{id}}'>
+                            <button>Delete comment</button>
+                        {{/comment}}
+                    </ul>
+
+                {{/myPostsLost}}
+                <hr>
+            <h1>Found Posts</h1>
+
+                {{#myPostsFound}}
+
+                    {{user_fk}}
+                    {{species}}
+                    {{breed}}
+                    {{description}}
+                    <img src = "/uploads/{{pet_pic}}" />
+                    <form method="POST" action = "/delete-MyFoundPost">
+                        <input type = "hidden" name = "id" value={{id}} /> 
+                        <button>Delete post</button>
+                    </form>
+                    <ul>
+                        <h2>Comments</h2>
+                        {{#comment}}
+                            <p>{{body}}</p>
+                            <p>{{body}}</p> 
+                            <form method='POST' action='/deleteMyFoundComment/{{id}}'>
+                            <button>Delete comment</button>
+                        {{/comment}}
+                    </ul>
+
+     
+                {{/myPostsFound}}
+    <body>
+<html>
+  
+
+
+

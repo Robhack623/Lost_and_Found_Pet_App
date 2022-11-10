@@ -5,10 +5,24 @@
   <body>
         <h1>Lost Pets</h1>
         <hr> 
-
-
         <button onclick = "window.location.href='http://localhost:3000/lost-animals/{{id}}'">Back</button> 
         <button onclick = "window.location.href='http://localhost:3000/dashboard'">Go to Main</button>  
+        
+        <h2>Please, download a picture of your pet:</h2>
+        <form action = "/upload" method ="POST" enctype ="multipart/form-data">
+        <label>Picture of your animal</label>
+        <input type="file" name="photo" />
+        <button type="submit">Upload</button>
+        </form>
+
+
+        <div class="pet-preview-image">
+        
+        <img src = "{{imageURL}}" class ="{{className}}"/>
+        </div>
+
+
+        
 
       
         <form method = "POST" action = "/add_lost_post">
@@ -27,18 +41,7 @@
         </form>
         <br>
 
-        <h2>Please, download a picture of your pet:</h2>
-        <form action = "/upload" method ="POST" enctype ="multipart/form-data">
-        <label>Picture of your animal</label>
-        <input type="file" name="photo" />
-        <button type="submit">Upload</button>
-        </form>
-
-
-        <div class="pet-preview-image">
         
-        <img src = "{{imageURL}}" class ="{{className}}"/>
-        </div>
   
 
       
