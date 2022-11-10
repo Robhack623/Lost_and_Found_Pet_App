@@ -10,47 +10,41 @@
 <br>   
 
     <h1 class = "Found">Found Pets 🐾 </h1><hr>
-    <hr>
+    
 
 <br><div><button class="button" onclick="window.location.href='http://localhost:3000/add_found_post'">Found a pet!</button></div><br>
 
                
       
-    <ul>
+    <ul style="list-style: none;">
     {{#result}}
-        <li>Species:{{species}}</li>
-        <li>Color:{{color}}</li>
-        <li>Breed:{{breed}} </li>
-        <li>Gender:{{gender}} </li>
-        <li>Name:{{name}} </li>
-        <li>Size:{{size}} </li>
-        <li>Age:{{age}} </li>
-        <li>Location:{{zipCode}} </li>
-        <li>Description:{{description}} </li>
-        <li>Date:{{dateLost}} </li>
-             
-       {{! {{#found_post}} 
-         {{#comment}}
-                   <p>{{body}}</p> 
-                   <form method='POST' action='/deleteFoundPost/{{id}}'>
-                   <button>Delete comment</button>
+        <li><h3>A {{species}} named {{name}}.</h3>
+        <ul style="list-style: none;">
+            <li>Breed: {{breed}}</li>
+            <li>Color: {{color}}</li>
+            <li>Size: {{size}}</li>
+            <li>Age: {{age}}</li>
+            <li>Found on {{dateFound}}</li>
+            <li>Description: {{description}}</li>
+            <img src = "/uploads/{{pet_pic}}" class="uploaded-pic"/>
+        </ul>
+            <h4>Comments</h4>
+            <ol>
+                {{#comment}}
+                    <li>
+                        {{body}}
+                    </li>
                 {{/comment}}
-  {{! {{/found_post}} 
-              
-             <h1>------------</h1>
-             <form method="POST" action = "/delete-post">
-             <input type = "hidden" name =id value={{id}} /> 
-             <button>Delete post</button>
-            </form>
-            
+            </ol> 
+            <hr>
             <form method="POST" action = "/comments">  
-            <input type ="text" placeholder = "Comments" name ="comment" />
+            <textarea type="text" placeholder = "add a comment..." name ="comment" cols="31" rows="3"></textarea>
             <input type = "hidden" name=id value={{id}} /> 
-            <button>Add comment</button>
+            <br><button class="button">Add a comment for {{name}}</button>
             </form>      
             <hr> 
         {{/result}}
-            </ul>
+    </ul><br><br><br>
 
 
 

@@ -206,6 +206,11 @@ body {
     color: #222;
 }
 
+.comment-delete {
+    font-size: 9px;
+    padding: 0 3px;
+}
+
 .button:hover {
     background-color: rgb(215, 243, 91);
 }

@@ -90,8 +90,6 @@ app.post('/register', async (req, res) => {
 
     let user_upload = await user.save()
 
-    console.log(user_upload)
-
     res.redirect('login')
 })
 
@@ -107,24 +105,15 @@ app.get('/found_posts', async (req, res) => {
     res.render('found_posts', {result:result})
 })
 
-app.get('/dashboard', authentication, (req, res) =>{
-    const username = req.session.username 
-    console.log('Hello, ' + username)
-
-    res.render('dashboard', {username: req.session.username})
-})
-
-
 /*  ------File Upload code (Dmitry's Work)------   */
 
 function uploadFile(req, callback) {
     new formidable.IncomingForm ().parse (req)
     .on('fileBegin', (name, file) => {
-        console.log(file)
+        
         uniqueFileName = `${uuidv4()}.${file.originalFilename.split(".").pop()}`;
         file.name = uniqueFileName
         file.filepath = __basedir + '/uploads/' + file.name
-        console.log(file)
 
     })
     .on ('file', (name, file) => {
@@ -146,14 +135,25 @@ app.post('/upload', (req, res) => {
 app.get('/my_posts', authentication, async (req, res) => {
     const username = req.session.username
     const userId = req.session.userId
+    
     const post_detail_lost = await models.lost_post.findAll({where: {user_fk:userId}})
-    const post_detail_found = await models.found_post.findAll({where: {user_fk:userId}})
-    let comments =await models.lost_comment.findAll({})
+    let lostComments = await models.lost_comment.findAll({})
     for (let post of post_detail_lost) {
-        let filteredComments = comments.filter(comment => comment.lost_fk == post.id)
+        let filteredComments = lostComments.filter(comment => comment.lost_fk == post.id)
         post.comment = filteredComments
     }
-    res.render('my_posts', {myPostsLost: post_detail_lost, myPostsFound: post_detail_found, username: req.session.username})
+    
+    let result = await models.found_post.findAll({where: {user_fk:userId}})
+    let comments = await models.found_comment.findAll({})
+    for (let post of result) {
+        let filteredComments = comments.filter(comment => comment.found_fk == post.id)
+        post.comment = filteredComments
+    }
+    
+    res.render('my_posts', {
+        myPostsLost: post_detail_lost, 
+        result:result,
+        username: req.session.username})
 })
 
 
@@ -331,8 +331,7 @@ app.get('/found-posts', async (req, res) => {
         let filteredComments = comments.filter(comment => comment.found_fk == post.id)
         post.comment = filteredComments
     }
-    console.log(result)
-    res.render('found_posts', {result:result, comments:comments})
+    res.render('found_posts', {result:result, comments:comments, username: req.session.username})
 })
 
 app.get('/add_found_post', authentication, async (req, res) => {
@@ -361,7 +360,7 @@ app.post('/found-posts', authentication, async (req, res) => {
         user_fk: userId
     })
    await found_animal.save()
-   res.redirect('/found-posts',)
+   res.render('/found-posts',)
 })
 /* deleting the post from the database. */
 app.post('/delete-post', async(req, res) =>  {

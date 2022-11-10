@@ -9,10 +9,12 @@
 <br>     
 
     <h1 class = "Found">{{username}}'s Lost Pets 🐾 </h1><hr>
-
+{{^allAnimals}}
+    <h1>No Posts yet..</h1>
+{{/allAnimals}}
 <ol>
 {{#myPostsLost}}
-    <li><h3>A {{species}} named {{name}} !</h3>
+    <li><h3>A {{species}} named {{name}}.</h3>
         <ul>
             <li>Breed: {{breed}}</li>
             <li>Color: {{color}}</li>
@@ -24,24 +26,33 @@
         </ul>
         <form method="POST" action = "/delete-MyLostPost">
             <input type = "hidden" name = "id" value={{id}} /> 
-            <button>Delete post</button>
+            <button class="button">Delete post</button>
         </form>
-        <ol>
-            <h2>Comments</h2>
-            <li>{{#comment}}
-                <p>{{body}}</p>
+            <h4>Comments</h4>
+             <ol>
+                {{#comment}}
+                    <li>{{body}}
                 <form method='POST' action='/deleteMyLostComment/{{id}}'>
-                <button>Delete comment</button>
-            {{/comment}}</li>
+                    <button class="button comment-delete">Delete comment</button>
+                </form></li>
+            {{/comment}}
         </ol>
     </li>
 {{/myPostsLost}}
 </ol>
 <br><hr><br>
 
+
+<!-- FOUND PETS -->
+
+
 <h1 class = "Found">{{username}}'s Found Pets 🐾 </h1><hr>
+{{^allAnimals}}
+    <h1>No Posts yet..</h1>
+{{/allAnimals}}
+
 <ol>
-{{#myPostsFound}}
+{{#result}}
     <li><h3>A {{species}} named {{name}} !</h3>
         <ul>
             <li>Breed: {{breed}}</li>
@@ -54,20 +65,22 @@
         </ul>
         <form method="POST" action = "/delete-MyFoundPost">
                         <input type = "hidden" name = "id" value={{id}} /> 
-                        <button>Delete post</button>
+                        <button class="button">Delete post</button>
                     </form>
-                    <ol>
                         <h4>Comments</h4>
-                        <li>{{#comment}}
-                            <p>{{body}}</p>
-                            <p>{{body}}</p> 
-                            <form method='POST' action='/deleteMyFoundComment/{{id}}'>
-                            <button>Delete comment</button>
-                        {{/comment}}</li>
-                    </ol>
+                        <ol>
+                            {{#comment}}
+                                <li>{{body}}
+                                <form method='POST' action='/deleteMyFoundComment/{{id}}'>
+                                    <button class="button comment-delete">Delete</button>
+                                </form></li>
+                            {{/comment}}
+                        </ol>
     </li>
-{{/myPostsFound}}
+{{/result}}
 </ol>
+
+
 <br><br><br><br>
   {{> footer}}
     </body>
