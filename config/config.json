@@ -14,10 +14,10 @@
     "dialect": "mysql"
   },
   "production": {
-    "username": "root",
-    "password": null,
-    "database": "database_production",
-    "host": "127.0.0.1",
-    "dialect": "mysql"
+    "username": "oryhowfb",
+    "password": "Za3m6ySwbtuV5_5irUgRVn99qHzv-eGB",
+    "database": "oryhowfb",
+    "host": "hansken.db.elephantsql.com",
+    "dialect": "postgres"
   }
 }
