@@ -16,9 +16,14 @@
     <input type="password" placeholder="Enter password" name="password" required/>
     <br><br>
     <button class="button">Login</button>
+</form><br>
+<form method="POST" action="/login-guest">
+    <input type="hidden" value="guest" name="usernameGuest">
+    <input type="hidden" value="123456" name="passwordGuest">
+    <button class="button">Guest Login</button>
 </form>
 <br>
-<button class="button" onclick="window.location.href='http://localhost:3000/register'">Register</button>
+<button class="button" onclick="window.location.href='/register'">Register</button>
 
 {{errorMessage}}
 

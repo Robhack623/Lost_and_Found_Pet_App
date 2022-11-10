@@ -38,6 +38,10 @@ app.get('/login', (req, res) => {
     res.render('login')
 })
 
+app.get('/', (req, res) => {
+    res.render('login')
+})
+
 app.post('/login', async (req, res) => {
     const {username, password } = req.body
     const user = await models.user.findOne({
@@ -57,6 +61,28 @@ app.post('/login', async (req, res) => {
         
         res.render('login', {errorMessage: 'Invalid username or password'})
     }}
+})
+
+app.post("/login-guest", async (req, res) => {
+    const {usernameGuest, passwordGuest} = req.body
+    let userGuest = await models.user.findOne({
+        where: {
+            username:usernameGuest
+        }})
+    if(userGuest) {
+        const result = await bcrypt.compare(passwordGuest, userGuest.password)
+        if(result) {
+            if(req.session) {
+                req.session.username = userGuest.username 
+                req.session.userId = userGuest.id
+            }
+            res.redirect('dashboard')
+        } else {
+            res.render('login', { errorMessage: "Invalid username or password."})
+        }
+    } else {
+        res.render('login', { errorMessage: "Invalid username or password."})
+    }
 })
 
 app.get('/logout', authentication, (req,res)=>{
@@ -405,6 +431,9 @@ app.post('/deleteFoundPost/:id', async(req, res) => {
 })
 
 /*  ------Server Stuff------   */
-app.listen(3000,() => {
+
+const PORT = process.env.PORT || 3000
+
+app.listen(PORT,() => {
     console.log('Server is running...')
 })                        
