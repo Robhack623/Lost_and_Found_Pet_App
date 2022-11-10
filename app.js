@@ -405,6 +405,9 @@ app.post('/deleteFoundPost/:id', async(req, res) => {
 })
 
 /*  ------Server Stuff------   */
+
+const PORT = process.env.PORT || 3000
+
 app.listen(3000,() => {
     console.log('Server is running...')
 })                        
