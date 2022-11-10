@@ -1,36 +1,33 @@
-#  :paw: R&Ds Rescue :paw:
+#   <p align="center"> R&Ds Rescue </p>
 
 <p align="center">
-    <img src="images/ghost_logo.png" width="230px" height="250px">
-</P>
+    <img src="styles_images/rob_animals/rp9.JPEG" width="500px" height="300px">
+</p>
 
 * **Purpose of the app:** 
-   This app was created to give the user an easy and interactive way to find a new cocktail for their next event, search a recipe for a specific cocktail, or peruse their way through over 600 drink recipes based off of their favorite ingredients!
+   This app was created to give the user an easy and interactive way to post about a pet that may have escaped out of the backyard or gotten away from them while walking. It is also a place to post if you FOUND a pet wandering the streets. This app will make it easier for pet owners to communicate with each other over a common goal: the safety of our pets!
 
 <p align="center">
-    <img src="images/boos_logo.png" width="300px" height="225px">
+    <img src="styles_images/rob_animals/rp7.JPEG" width="300px" height="225px">
 
 * **Features on the app:**
-    Our homepage first shows our most popular drinks when loaded. In our "navigation bar", the user is given the option of sorting through our drinks alphabetically (split into groups), by chosen spirit, or to randomly generate a drink. There is also a search bar at the top to find drinks that match the name of the drinks based on the user input. 
+    Our homepage first shows our pets that have already been located and returned to their owners! It is a celebration of us meeting our goals. In our "navigation bar", the user is given the option of viewing posts about pets that are lost or pets that have been found. From there they are able to make a post or comment on a post to better help other users locate their pets. There is also an option to view all of YOUR posts that you have made.
 
 </P>
 <br>
 
 
-## Preview of SPIRIT GUIDE
+## Preview of R&Ds Rescue
 
-<img src="images/site_preview.JPG" height="400px" width="600px">
+<img src="styles_images/site_preview.png" height="400px" width="900px">
 
 ## Live link: 
-- [Spirit Guide](https://spirit-guide.netlify.app/)
-
-## External API:
-- [The Cocktail DB API](https://thecocktaildb.com/)
+- [R&Ds Rescue](https://whispering-tor-24303.herokuapp.com/)
 
 ## Featured programs: 
-- HTML, CSS, JavaScript
+- HTML, CSS, JavaScript, Node.js, ElephantSQL, Beekeeper Studio
 
 ## SPIRIT GUIDE builders:
-- [Matt Herringshaw](https://github.com/MattHerringshaw1) 
-- [Eddie Zaboroskie](https://github.com/ezaboroskie) 
+- [Dmitry Shunin](https://https://github.com/Dimasik0204) 
 - [Rob Hackett](https://github.com/Robhack623) 
+- [Daniel Moros](https://github.com/Ddmoros) 
