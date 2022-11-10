@@ -28,6 +28,7 @@ app.use(session({
 }))
 
 /*  a route that is rendering the found_posts page. */
+app.use('/styles_images', express.static ('styles_images'))
 app.use('/uploads', express.static ('uploads'))
 app.use('/css', express.static ('css'))
 
@@ -145,8 +146,8 @@ app.post('/upload', (req, res) => {
 
 /*  ------Lost Pages Post/Comment/etc (Dmitry's Work)------   */
 
-app.get('/my_posts/:userId', authentication, async (req, res) => {
-    
+app.get('/my_posts', authentication, async (req, res) => {
+    const username = req.session.username
     const userId = req.session.userId
     const post_detail_lost = await models.lost_post.findAll({where: {user_fk:userId}})
     const post_detail_found = await models.found_post.findAll({where: {user_fk:userId}})
@@ -155,7 +156,7 @@ app.get('/my_posts/:userId', authentication, async (req, res) => {
         let filteredComments = comments.filter(comment => comment.lost_fk == post.id)
         post.comment = filteredComments
     }
-    res.render('my_posts', {myPostsLost: post_detail_lost, myPostsFound:post_detail_found })
+    res.render('my_posts', {myPostsLost: post_detail_lost, myPostsFound: post_detail_found, username: req.session.username})
 })
 
 
@@ -326,13 +327,18 @@ app.get('/found-posts', async (req, res) => {
     console.log(result)
     res.render('found_posts', {result:result, comments:comments})
 })
-/*  a route that is rendering the found_posts page. */
+
+app.get('/add_found_post', authentication, async (req, res) => {
+    res.render('add_found_post', {username: req.session.username, userId: req.session.userId})
+} )
+
+/*  adding a new post to found-posts */
 app.post('/found-posts', authentication, async (req, res) => {
 
     const username = req.session.username 
     const userId = req.session.userId
 
-    let {species, color, breed, gender, name, size, age, location, description, date_found} = req.body    
+    let {species, color, breed, gender, name, size, age, zipCode, description, dateFound} = req.body    
 
     let found_animal = await models.found_post.build({
         species: species,
@@ -342,13 +348,13 @@ app.post('/found-posts', authentication, async (req, res) => {
         name: name,
         size: size,
         age: age,
-        location: location,
+        zip_code: zipCode,
         description: description,
-        date_found: date_found
-
+        date_found: dateFound,
+        user_fk: userId
     })
    await found_animal.save()
-   res.redirect('/found-posts')
+   res.redirect('/found-posts',)
 })
 /* deleting the post from the database. */
 app.post('/delete-post', async(req, res) =>  {

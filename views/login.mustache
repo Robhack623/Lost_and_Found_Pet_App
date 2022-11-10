@@ -1,12 +1,29 @@
-<h1>LOGIN PAGE</h1>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {{> header}}
+
+    <link rel="stylesheet" href="css/login.css">
+</head>
+<body>
+  {{> login-menu}}
+
+<h1>LOGIN</h1>
 
                                                                
 <form method="POST" action="/login">
-    <input type="text" placeHolder="Enter username" name="username" />
-    <input type="password" placeholder="Enter password" name="password" />
-    <button>Login</button>
+    <input type="text" placeHolder="Enter username" name="username" required/>
+    <input type="password" placeholder="Enter password" name="password" required/>
+    <br><br>
+    <button class="button">Login</button>
 </form>
-
-<button onclick="window.location.href='http://localhost:3000/register'">Register</button>
+<br>
+<button class="button" onclick="window.location.href='http://localhost:3000/register'">Register</button>
 
 {{errorMessage}}
+
+    {{> footer}}
+</body>
+</html>
+
+
