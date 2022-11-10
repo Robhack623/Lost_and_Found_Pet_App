@@ -9,7 +9,8 @@ const { Op } = require('sequelize')
 const formidable = require ('formidable')
 const {v4:uuidv4} = require ('uuid') 
 const db = require('./models');
-const path = require ('path')
+const path = require ('path');
+const { url } = require('inspector');
 
 global.__basedir = __dirname
 const VIEWS_PATH = path.join(__dirname, '/views')
@@ -116,6 +117,7 @@ app.get('/dashboard', authentication, (req, res) =>{
 
 
 /*  ------File Upload code (Dmitry's Work)------   */
+let uniqueFileName = '';
 
 function uploadFile(req, callback) {
     new formidable.IncomingForm ().parse (req)
@@ -193,11 +195,11 @@ app.get('/add_lost_post', authentication, async (req,res)=>{
 })
 
 app.post ('/add_lost_post',  async (req,res)=>{
-     
+    const defaultImage  = "noImage.jpg"
     const userId = req.session.userId
     let lost_animal;
     let {species, color, breed, gender, name, size, age, zipCode, description, dateLost } =  req.body 
-    if(uniqueFileName) {
+    if(uniqueFileName == '') {
         lost_animal = await models.lost_post.build ({
                 species: species, 
                 color: color,
@@ -208,7 +210,7 @@ app.post ('/add_lost_post',  async (req,res)=>{
                 age: age, 
                 zip_code: zipCode, 
                 description: description, 
-                pet_pic: uniqueFileName, 
+                pet_pic: defaultImage,
                 date_lost: dateLost,
                 user_fk: userId
     })} else {
@@ -222,7 +224,7 @@ app.post ('/add_lost_post',  async (req,res)=>{
             age: age, 
             zip_code: zipCode, 
             description: description, 
-            pet_pic: "uniqueFileName", 
+            pet_pic: uniqueFileName, 
             date_lost: dateLost,
             user_fk: userId
     })}
