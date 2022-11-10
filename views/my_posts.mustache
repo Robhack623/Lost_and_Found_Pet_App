@@ -26,14 +26,14 @@
             <input type = "hidden" name = "id" value={{id}} /> 
             <button>Delete post</button>
         </form>
-        <ul>
+        <ol>
             <h2>Comments</h2>
-            {{#comment}}
+            <li>{{#comment}}
                 <p>{{body}}</p>
                 <form method='POST' action='/deleteMyLostComment/{{id}}'>
                 <button>Delete comment</button>
-            {{/comment}}
-        </ul>
+            {{/comment}}</li>
+        </ol>
     </li>
 {{/myPostsLost}}
 </ol>
@@ -56,15 +56,15 @@
                         <input type = "hidden" name = "id" value={{id}} /> 
                         <button>Delete post</button>
                     </form>
-                    <ul>
-                        <h2>Comments</h2>
-                        {{#comment}}
+                    <ol>
+                        <h4>Comments</h4>
+                        <li>{{#comment}}
                             <p>{{body}}</p>
                             <p>{{body}}</p> 
                             <form method='POST' action='/deleteMyFoundComment/{{id}}'>
                             <button>Delete comment</button>
-                        {{/comment}}
-                    </ul>
+                        {{/comment}}</li>
+                    </ol>
     </li>
 {{/myPostsFound}}
 </ol>

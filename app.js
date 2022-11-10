@@ -127,19 +127,16 @@ function uploadFile(req, callback) {
         console.log(file)
 
     })
-    /*
     .on ('file', (name, file) => {
         callback(file.name)
 
     })
-    */
 }
 
 app.post('/upload', (req, res) => {
     uploadFile(req,(photoURL) => {
         photoURL = `/uploads/${photoURL}`
         res.render('add_lost_post', {imageURL: photoURL, className: 'pet-preview-image'})
-
     })
 })
 
@@ -162,27 +159,27 @@ app.get('/my_posts', authentication, async (req, res) => {
 
 app.post('/delete-MyLostPost', async(req, res) =>  {
     let {id} = req.body
-    console.log(req.body)
+    await models.lost_comment.destroy({where:{lost_fk:id}})
     await models.lost_post.destroy({where:{id:parseInt(id)}})
-    res.redirect(`/my_posts/${req.session.userId}`)
+    res.redirect(`my_posts`)
 }) 
 
 app.post('/deleteMyLostComment/:id', async(req, res) => {  
     let {id} = req.params
     await models.lost_comment.destroy({where:{id:id}})
-    res.redirect(`/my_posts/${req.session.userId}`)
+    res.redirect(`/my_posts`)
 })
 app.post('/delete-MyFoundPost', async(req, res) =>  {
     let {id} = req.body
-    console.log(req.body)
+    await models.found_comment.destroy({where:{found_fk:id}})
     await models.found_post.destroy({where:{id:parseInt(id)}})
-    res.redirect(`/my_posts/${req.session.userId}`)
+    res.redirect(`/my_posts`)
 }) 
 
 app.post('/deleteMyFoundComment/:id', async(req, res) => {  
     let {id} = req.params
     await models.found_comment.destroy({where:{id:id}})
-    res.redirect(`/my_posts/${req.session.userId}`)
+    res.redirect(`/my_posts`)
 })
 
 
@@ -198,12 +195,24 @@ app.get('/add_lost_post', authentication, async (req,res)=>{
 app.post ('/add_lost_post',  async (req,res)=>{
      
     const userId = req.session.userId
-    
+    let lost_animal;
     let {species, color, breed, gender, name, size, age, zipCode, description, dateLost } =  req.body 
-    console.log(req.body, "This is test")
-   
-
-    let lost_animal = await models.lost_post.build ({
+    if(uniqueFileName) {
+        lost_animal = await models.lost_post.build ({
+                species: species, 
+                color: color,
+                breed: breed,
+                gender: gender,
+                name: name, 
+                size: size, 
+                age: age, 
+                zip_code: zipCode, 
+                description: description, 
+                pet_pic: uniqueFileName, 
+                date_lost: dateLost,
+                user_fk: userId
+    })} else {
+        lost_animal = await models.lost_post.build ({
             species: species, 
             color: color,
             breed: breed,
@@ -213,12 +222,10 @@ app.post ('/add_lost_post',  async (req,res)=>{
             age: age, 
             zip_code: zipCode, 
             description: description, 
-            pet_pic: uniqueFileName, 
+            pet_pic: "uniqueFileName", 
             date_lost: dateLost,
-            user_fk: userId  
-                      
-    })
-    
+            user_fk: userId
+    })}
     let upload_lost_animal = await lost_animal.save()
     if (upload_lost_animal != null) {
         res.redirect('/lost-animals')
