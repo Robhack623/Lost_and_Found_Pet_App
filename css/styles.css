@@ -257,3 +257,11 @@ body {
     height:300px;
     margin:40px;
 }
+.postText {
+    font-weight: bold;
+    font-family: cursive;
+    color: 	#4169E1;
+}
+.noSpace {
+    white-space: nowrap;
+}

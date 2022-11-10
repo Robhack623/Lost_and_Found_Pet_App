@@ -11,9 +11,20 @@
    
 <div class="registration-form">
          <h1 class = "Found">🐾 {{username}} found a pet! 🐾 </h1><hr>
-         <form method="POST" action="/found-posts">
+         
+         <h2>Please, download a picture of your pet:</h2>
+            <form action = "/upload-found-image" method ="POST" enctype ="multipart/form-data">
+            <label>Picture of your animal</label>
+            <input type="file" name="photo" />
+            <button class="button" type="submit" >Upload</button>
+            </form>
+
+            
+            <img src = "{{imageURL}}" class ="uploaded-pic"/>
+            
+<form method="POST" action="/found-posts">
           <div class="form-wrap">
-        <div class="all-inputs">
+        <div class="all-inputs">     
             <div class="input"><select name="species" required>
                 <option value="">Animal Species</option>
                 <option value="dog">Dog</option>
@@ -50,16 +61,7 @@
             </div>
             </form> 
 
-            <h2>Please, download a picture of your pet:</h2>
-            <form action = "/upload-found-image" method ="POST" enctype ="multipart/form-data">
-            <label>Picture of your animal</label>
-            <input type="file" name="photo" />
-            <button type="submit">Upload</button>
-            </form>
-
-            <div class="pet-preview-image">
-            <img src = "{{imageURL}}" class ="{{className}}"/>
-            </div>
+            
 
                
 </div>

@@ -20,12 +20,12 @@
     {{#result}}
         <li><h3>A {{species}} named {{name}}.</h3>
         <ul style="list-style: none;">
-            <li>Breed: {{breed}}</li>
-            <li>Color: {{color}}</li>
-            <li>Size: {{size}}</li>
-            <li>Age: {{age}}</li>
-            <li>Found on {{dateFound}}</li>
-            <li>Description: {{description}}</li>
+            <li><b>Breed:</b> </p>  {{breed}} </li>
+            <li><b>Color:</b> {{color}}</li>
+            <li><b>Size:</b> {{size}}</li>
+            <li><b>Age:</b> {{age}}</li>
+            <li><b>Found on:</b> {{dateFound}}</li>
+            <li><b>Description:</b> {{description}}</li>
             <img src = "/uploads/{{pet_pic}}" class="uploaded-pic"/>
         </ul>
             <h4>Comments</h4>
@@ -43,6 +43,9 @@
                     <br><button class="button">Add a comment for {{name}}</button>
                 </form>      
             <hr> 
+        {{/result}}
+        {{^result}}
+          <h1>No Posts yet..</h1>
         {{/result}}
     </ul><br><br><br>
         {{> footer}}
