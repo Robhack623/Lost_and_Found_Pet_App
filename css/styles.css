@@ -3,6 +3,7 @@ body {
     letter-spacing: 0;
     background-color: #f8f8f8;
     width: 100%;
+    height: 100%;
     font-family: Inter,sans-serif;
 }
 
@@ -22,9 +23,8 @@ body {
 }
 
 .logo-footer {
-    width: 30px;
-    padding-left: 5px;
-    padding-top: 4px;
+    height: 25px;
+
 }
 
 .make-right {
@@ -112,17 +112,31 @@ body {
 
 
 .footer {
-    margin: 0;
-    padding-bottom: 1rem;
-    padding-left: 16px;
-    padding-right: 12px;
-    padding-top: 1rem;
     width: 100%;
-    display: flex;
-    box-sizing: border-box;
-    background-color: white;
+    background-color: #014863;
     position: absolute;
     bottom: 0px;
+    display: flex;
+    box-shadow: 0 1px 8px 0 rgb(0 0 0 / 20%), 0 3px 3px -2px rgb(0 0 0 / 12%), 0 3px 4px 0 rgb(0 0 0 / 14%);
+    justify-content: right;
+}
+
+.reg-footer {
+    width: 100%;
+    background-color: #014863;
+    position: absolute;
+    bottom: 0px;
+    display: flex;
+    box-shadow: 0 1px 8px 0 rgb(0 0 0 / 20%), 0 3px 3px -2px rgb(0 0 0 / 12%), 0 3px 4px 0 rgb(0 0 0 / 14%);
+    justify-content: right;
+}
+
+.bottom-links {
+    padding-right: 10px;
+    color: white;
+}
+.footer, .secondary-header2 {
+    padding-right: 20px;
 }
 
 .link-buttons {
@@ -179,21 +193,45 @@ body {
     }
 }
 
-.logo-container-footer {
-    display: flex;
-    margin-bottom: 0;
-    text-align: left;
+.button {
+    display: inline-block;
+    outline: 0;
+    cursor: pointer;
+    padding: 0 24px;
+    border-radius: 8px;
+    font-size: 18px;
+    background-color: #fd0;
+    font-weight: 500;
+    color: #222;
 }
 
-.bottom-links {
-    width: 100%;
-    padding-right: 15px;
-    padding-left: 15px;
-    margin-right: auto;
-    margin-left: auto;
-    box-sizing: border-box;
-    display: block;
-    font-size: 12px;
-    font-weight: 500px;
-    
+.button:hover {
+    background-color: rgb(215, 243, 91);
+}
+
+
+.form-wrap{
+    margin-top: 35px;
+  }
+
+.input {
+    padding: 10px;
+    outline: none;
+    border-radius: 3px;
+}
+
+.form-wrap .input:last-child {
+    margin-bottom: 0;
+}
+
+.form-wrap .all-inputs {
+    display: flex;
+    flex-wrap: wrap;
+    max-width: 40%;
+}
+
+.registration-form {
+    justify-content: center;
+    align-items: center;
+    width: 75%;
 }
