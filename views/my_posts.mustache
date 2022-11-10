@@ -8,10 +8,7 @@
 {{> menu}}
 <br>     
 
-    <h1 class = "Found">{{username}}'s Lost Pets 🐾 </h1><hr>
-{{^allAnimals}}
-    <h1>No Posts yet..</h1>
-{{/allAnimals}}
+    <h1 class = "Found">🐾 {{username}}'s Lost Pets 🐾 </h1><hr>
 <ol>
 {{#myPostsLost}}
     <li><h3>A {{species}} named {{name}}.</h3>
@@ -40,6 +37,9 @@
     </li>
 {{/myPostsLost}}
 </ol>
+{{^allAnimals}}
+    <h1>No Posts yet..</h1>
+{{/allAnimals}}
 <br><hr><br>
 
 
@@ -47,10 +47,6 @@
 
 
 <h1 class = "Found">{{username}}'s Found Pets 🐾 </h1><hr>
-{{^allAnimals}}
-    <h1>No Posts yet..</h1>
-{{/allAnimals}}
-
 <ol>
 {{#result}}
     <li><h3>A {{species}} named {{name}} !</h3>
@@ -79,10 +75,11 @@
     </li>
 {{/result}}
 </ol>
-
+{{^allAnimals}}
+    <h1>No Posts yet..</h1>
+{{/allAnimals}}
 
 <br><br><br><br>
   {{> footer}}
-    </body>
-   
+    </body> 
 </html>

@@ -1,54 +1,52 @@
-<html>
-  <head>
+<!DOCTYPE html>
+<html lang="en">
+<head>
     {{> header}}
-    <link rel ="stylesheet" href="/css/lostPage.css"></link>
+
+    <link rel="stylesheet" href="css/login.css">
+</head>
+<body>
+{{> menu}}
+<br> 
+
+  <h1 class = "Found">🐾 Lost Pets 🐾 </h1><hr>
+
+    <br><div><button class="button" onclick="window.location.href='http://localhost:3000/add_lost_post'">I lost my pet</button></div><br>
     
-  </head>
-  <body>
-   {{> menu}}
-    <button onclick = "window.location.href='http://localhost:3000/add_lost_post'">Add your post</button>
-     <div class = "view_all_animals">
-        <ul>
-            {{#allAnimals}}
-              <img src = "/uploads/{{pet_pic}}" class ="list-animals" />
-              <button onclick = "window.location.href='http://localhost:3000/lost-animals/{{id}}'">See all details</button>
-              
-              <button onclick = "window.location.href='http://localhost:3000/postComment/{{id}}'">Add Comment</button>
-              <h3>{{species}}</h3>
-              <h3>{{color}}</h3>
-              <h3>{{breed}} </h3>
-              <h3>{{gender}} </h3>
-              <h3>{{name}} </h3>
-              <h3>{{size}} </h3>
-              <h3>{{age}} </h3>
-              <h3>{{zip_code}} </h3>
-              <p>{{description}} </p>
-              <h3>{{date_lost}} </h3>
-              
-            
+<!--<button onclick = "window.location.href='http://localhost:3000/lost-animals/{{id}}'">See all details</button>-->             
 
-
-
-              <ul>
-                  <h2>Recent comments</h2>
-                  {{#comment}}
-                      <p>{{body}}</p>
-                  {{/comment}}
-              </ul>
-            
-            {{/allAnimals}}
-            {{^allAnimals}}
-               <h1>No Posts yet..</h1>
-            {{/allAnimals}}
-      </div>
-
- 
-
-  
+    <ul style="list-style: none;">
+    {{#allAnimals}}
+      <li><h3>A {{species}} named {{name}}.</h3>
+      <ul style="list-style: none;">
+        <li>Breed: {{breed}}</li>
+        <li>Color: {{color}}</li>
+        <li>Size: {{size}}</li>
+        <li>Age: {{age}}</li>
+        <li>Found on {{dateFound}}</li>
+        <li>Description: {{description}}</li>
+        <img src = "/uploads/{{pet_pic}}" class ="uploaded-pic" />
+      </ul>
+        <h4>Comments</h4>
+        <ol>
+          {{#comment}}
+            <li>
+              {{body}}
+            </li>
+          {{/comment}}
+        </ol>
+        <hr>
+          <form method="POST" action = "/add-comments">  
+            <textarea type="text" placeholder = "add a comment..." name ="body" cols="31" rows="3"></textarea>
+            <input type = "hidden" name=id value={{id}} /> 
+            <br><button class="button">Add a comment for {{name}}</button>
+          </form>      
+        <hr> 
+    {{/allAnimals}}
+        {{^allAnimals}}
+            <h1>No Posts yet..</h1>
+        {{/allAnimals}}
+      </ul><br><br><br>
+    {{> footer}}
   </body>
-
-
-
-
-
 </html>

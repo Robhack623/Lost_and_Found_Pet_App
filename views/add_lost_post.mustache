@@ -1,63 +1,70 @@
-<html>
-  <head>
-    <link rel ="stylesheet" href="/css/lostPage.css"></link>
-  </head>
-  <body>
-        <h1>Lost Pets</h1>
-        <hr> 
-        <button onclick = "window.location.href='http://localhost:3000/lost-animals/{{id}}'">Back</button> 
-        <button onclick = "window.location.href='http://localhost:3000/dashboard'">Go to Main</button>  
-        
-        <h2>Please, download a picture of your pet:</h2>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {{> header}}
+
+    <link rel="stylesheet" href="css/login.css">
+</head>
+<body>
+  {{> menu}}
+
+
+<div class="registration-form">
+         <h1 class = "Found">🐾 {{username}} lost a pet 🐾 </h1><hr>
+
+        <h2>Please, upload a picture of your pet:</h2>
         <form action = "/upload" method ="POST" enctype ="multipart/form-data">
-        <label>Picture of your animal</label>
-        <input type="file" name="photo" />
-        <button type="submit">Upload</button>
+          <label>Picture of your animal</label>
+          <input type="file" name="photo" />
+          <button class="button" type="submit">Upload</button>
         </form>
 
+        <img src = "{{imageURL}}" class ="uploaded-pic"/>
 
-        <div class="pet-preview-image">
-        
-        <img src = "{{imageURL}}" class ="{{className}}"/>
-        </div>
+<form method="POST" action="/add_lost_post">
+          <div class="form-wrap">
+        <div class="all-inputs">
+            <div class="input"><select name="species" required>
+                <option value="">Animal Species</option>
+                <option value="dog">Dog</option>
+                <option value="cat">Cat</option>
+            </select></div>     
+            <div class="input"><select placeholder="Gender" name="gender" required>
+                <option value="">Gender</option>
+                <option value="female">Female</option>
+                <option value="male">Male</option>
+                <option value="unknown">Unknown</option>
+            </select></div>
+            <div class="input"><select name="size" required>
+                <option value="">Size</option>
+                <option value="small">Small</option>
+                <option value="medium">Medium</option>
+                <option value="large">Large</option>
+            </select></div>
+            <div class="input"><select name="age" >
+                <option value="">Approximate age</option>
+                <option value="0-5 years">0-5 years old</option>
+                <option value="5-10 years">5-10 years old</option>
+                <option value="10+ years old">10+ years old</option>
+            </select></div>
 
-
-        
-
-      
-        <form method = "POST" action = "/add_lost_post">
-            <h2>Please, let us know who was lost:</h2>
-            <input type = "text" placeHolder = "Dog/Cat" name = "species" />
-            <input type = "text" placeHolder = "Color of your pet" name = "color" />
-            <input type = "text" placeHolder = "Breed" name = "breed" />
-            <input type = "text" placeHolder = "Gender" name = "gender" />
-            <input type = "text" placeHolder = "Name" name = "name" />
-            <input type = "text" placeHolder = "Size" name = "size" />
-            <input type = "text" placeHolder = "Age" name = "age" />
-            <input type = "text" placeHolder = "Zip Code" name = "zipCode" />
-            <input type = "text" placeHolder = "Any other detail" name = "description" />
-            <input type = "date" placeHolder = "Date your pet was lost" name = "dateLost" />
-            <button>Submit</button>   
-        </form>
-        <br>
-
-        
-  
-
-      
-
-
-
-
-
-
-
+            <div class="input"><input type="text" placeholder="Color(s) of the animal" name="color" required/></div> 
+            <div class="input"><input type="text" placeholder="Breed, best guess!" name="breed" /></div>
+            <div class="input"><input type="text" placeholder="Name, if known" name="name"/></div>
+            <div class="input"><input type="text" placeholder="Your zip code" name="zipCode" maxlength="5" required/></div>
+            <div class="input"><input type="date" placeholder="Date your pet was lost" name="dateLost" required/></div>
+            <div class="input"><textarea type="text" placeholder="Describe the animal." name="description" rows="3" required></textarea></div><br>
+            </div>
+            
+            <button class="button">Save</button>
+            </div>
+            </form> 
+               
+</div>
+         <br><br><br><br><br>
+   
+    {{> footer}}
 
   </body>
-
-
-
-
-
 </html>
 

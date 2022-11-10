@@ -249,7 +249,7 @@ app.get ('/lost-animals', async (req,res) => {
         let filteredComments = comments.filter(comment => comment.lost_fk == post.id)
         post.comment = filteredComments
     }
-    res.render('lost_posts', {allAnimals:lost_animals})
+    res.render('lost_posts', {allAnimals:lost_animals, comments:comments})
 })
 
 
@@ -298,26 +298,19 @@ app.get('/show-comments/:id', authentication, async (req,res) => {
     
 })
 
-
-
-
-   // const postID = parseInt(req.params.id)
-
 app.post ('/add-comments', authentication, async (req, res) =>{
     const username = req.session.username 
     const userId = req.session.userId
 
-    const {description, id} = req.body
+    const {body, id} = req.body
     let comment = await models.lost_comment.build({
-        body:description,
-        lost_fk:parseInt(id)
+        body:body,
+        lost_fk:parseInt(id),
+        user_fk:userId
     })
     let savedComment = await comment.save()
-    if(savedComment) {
-        res.redirect(`/lost-animals/${id}`)
-    } else {
-        res.render('add_lost_comments')
-    }
+        res.redirect(`/lost-animals`)
+    
 })
 
 /*  ------Found Pages Post/Comment/etc(Daniel's Work)------   */
@@ -362,8 +355,9 @@ app.post('/found-posts', authentication, async (req, res) => {
         user_fk: userId
     })
    await found_animal.save()
-   res.render('/found-posts',)
+   res.render('/found-posts')
 })
+
 /* deleting the post from the database. */
 app.post('/delete-post', async(req, res) =>  {
     let {id} = req.body
@@ -373,10 +367,10 @@ app.post('/delete-post', async(req, res) =>  {
 }) 
 
 app.post('/comments', async(req, res) => {
-    
+    const userId = req.session.userId
     let {comment,id} = req.body
 
-    await models.found_comment.create({body:comment,found_fk:id})
+    await models.found_comment.create({body:comment,found_fk:id,user_fk:userId})
     res.redirect('/found-posts')
 })
 

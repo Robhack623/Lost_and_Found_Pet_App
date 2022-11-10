@@ -9,10 +9,10 @@
 {{> menu}}
 <br>   
 
-    <h1 class = "Found">Found Pets 🐾 </h1><hr>
+    <h1 class = "Found">🐾 Found Pets 🐾 </h1><hr>
     
 
-<br><div><button class="button" onclick="window.location.href='http://localhost:3000/add_found_post'">Found a pet!</button></div><br>
+    <br><div><button class="button" onclick="window.location.href='http://localhost:3000/add_found_post'">Found a pet!</button></div><br>
 
                
       
@@ -37,20 +37,14 @@
                 {{/comment}}
             </ol> 
             <hr>
-            <form method="POST" action = "/comments">  
-            <textarea type="text" placeholder = "add a comment..." name ="comment" cols="31" rows="3"></textarea>
-            <input type = "hidden" name=id value={{id}} /> 
-            <br><button class="button">Add a comment for {{name}}</button>
-            </form>      
+                <form method="POST" action = "/comments">  
+                    <textarea type="text" placeholder = "add a comment..." name ="comment" cols="31" rows="3"></textarea>
+                    <input type = "hidden" name=id value={{id}} /> 
+                    <br><button class="button">Add a comment for {{name}}</button>
+                </form>      
             <hr> 
         {{/result}}
     </ul><br><br><br>
-
-
-
-
-
-          {{> footer}}
+        {{> footer}}
     </body>
-   
 </html>
