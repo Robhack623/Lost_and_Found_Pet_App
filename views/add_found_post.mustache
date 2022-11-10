@@ -42,13 +42,25 @@
             <div class="input"><input type="text" placeholder="Breed, best guess!" name="breed" /></div>
             <div class="input"><input type="text" placeholder="Name, if known" name="name"/></div>
             <div class="input"><input type="text" placeholder="Your zip code" name="zipCode" maxlength="5" required/></div>
-            <div class="input"><input type="date" placeholder="Date you found the pet" name="dateFound" required/></div>
+            <div class="input"><input type="date" placeholder="Date found dd/mm/yy" name="dateFound" required/></div>
             <div class="input"><textarea type="text" placeholder="Describe the animal." name="description" rows="3" required></textarea></div><br>
             </div>
             
             <button class="button">Save</button>
             </div>
             </form> 
+
+            <h2>Please, download a picture of your pet:</h2>
+            <form action = "/upload-found-image" method ="POST" enctype ="multipart/form-data">
+            <label>Picture of your animal</label>
+            <input type="file" name="photo" />
+            <button type="submit">Upload</button>
+            </form>
+
+            <div class="pet-preview-image">
+            <img src = "{{imageURL}}" class ="{{className}}"/>
+            </div>
+
                
 </div>
          <br><br><br><br><br>

@@ -131,6 +131,13 @@ app.post('/upload', (req, res) => {
     })
 })
 
+app.post('/upload-found-image', (req, res) => {
+    uploadFile(req,(photoURL) => {
+        photoURL = `/uploads/${photoURL}`
+        res.render('add_found_post', {imageURL: photoURL, className: 'pet-preview-image'})
+    })
+})
+
 
 /*  ------Lost Pages Post/Comment/etc (Dmitry's Work)------   */
 
@@ -335,27 +342,42 @@ app.get('/add_found_post', authentication, async (req, res) => {
 
 /*  adding a new post to found-posts */
 app.post('/found-posts', authentication, async (req, res) => {
-
+    const defaultImage  = "noImage.jpg"
     const username = req.session.username 
     const userId = req.session.userId
-
+    let found_animal;
     let {species, color, breed, gender, name, size, age, zipCode, description, dateFound} = req.body    
-
-    let found_animal = await models.found_post.build({
-        species: species,
-        color: color,
-        breed: breed,
-        gender: gender,
-        name: name,
-        size: size,
-        age: age,
-        zip_code: zipCode,
-        description: description,
-        date_found: dateFound,
-        user_fk: userId
-    })
-   await found_animal.save()
-   res.render('/found-posts')
+    if(uniqueFileName == '') {
+         found_animal = await models.found_post.build({
+            species: species,
+            color: color,
+            breed: breed,
+            gender: gender,
+            name: name,
+            size: size,
+            age: age,
+            zip_code: zipCode,
+            description: description,
+            date_found: dateFound,
+            user_fk: userId,
+            pet_pic: defaultImage
+    })} else {
+         found_animal = await models.found_post.build({
+            species: species,
+            color: color,
+            breed: breed,
+            gender: gender,
+            name: name,
+            size: size,
+            age: age,
+            zip_code: zipCode,
+            description: description,
+            date_found: dateFound,
+            user_fk: userId,
+            pet_pic: uniqueFileName
+    })}
+    await found_animal.save()
+    res.redirect('/found-posts')
 })
 
 /* deleting the post from the database. */
