@@ -38,6 +38,10 @@ app.get('/login', (req, res) => {
     res.render('login')
 })
 
+app.get('/', (req, res) => {
+    res.render('login')
+})
+
 app.post('/login', async (req, res) => {
     const {username, password } = req.body
     const user = await models.user.findOne({
