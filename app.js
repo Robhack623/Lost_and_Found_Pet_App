@@ -63,6 +63,28 @@ app.post('/login', async (req, res) => {
     }}
 })
 
+app.post("/login-guest", async (req, res) => {
+    const {usernameGuest, passwordGuest} = req.body
+    let userGuest = await models.user.findOne({
+        where: {
+            username:usernameGuest
+        }})
+    if(userGuest) {
+        const result = await bcrypt.compare(passwordGuest, userGuest.password)
+        if(result) {
+            if(req.session) {
+                req.session.username = userGuest.username 
+                req.session.userId = userGuest.id
+            }
+            res.redirect('dashboard')
+        } else {
+            res.render('login', { errorMessage: "Invalid username or password."})
+        }
+    } else {
+        res.render('login', { errorMessage: "Invalid username or password."})
+    }
+})
+
 app.get('/logout', authentication, (req,res)=>{
     req.session.destroy()
     res.redirect('login')
