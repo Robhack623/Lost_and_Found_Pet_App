@@ -4,7 +4,7 @@
   </head>
   <body>
 
-        <button onclick = "window.location.href='http://localhost:3000/lost-animals'">Go To all Posts</button>
+        <button onclick = "window.location.href='lost-animals'">Go To all Posts</button>
         <ul >
           {{#details}}
             <img src = "/uploads/{{pet_pic}}" class ="comment-image" />
@@ -21,7 +21,7 @@
 
 
 
-           <button onclick = "window.location.href='http://localhost:3000/postComment/{{id}}'">Comment</button>
+           <button onclick = "window.location.href='postComment/{{id}}'">Comment</button>
            {{/details}}
         </ul>
 
