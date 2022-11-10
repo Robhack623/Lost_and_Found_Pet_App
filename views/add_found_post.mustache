@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {{> header}}
+
+    <link rel="stylesheet" href="css/login.css">
+</head>
+<body>
+  {{> menu}}
+
+   
+<div class="registration-form">
+         <h1 class = "Found">🐾 {{username}} found a pet! 🐾 </h1><hr>
+         <form method="POST" action="/found-posts">
+          <div class="form-wrap">
+        <div class="all-inputs">
+            <div class="input"><select name="species" required>
+                <option value="">Animal Species</option>
+                <option value="dog">Dog</option>
+                <option value="cat">Cat</option>
+            </select></div>     
+            <div class="input"><select placeholder="Gender" name="gender" required>
+                <option value="">Gender</option>
+                <option value="female">Female</option>
+                <option value="male">Male</option>
+                <option value="unknown">Unknown</option>
+            </select></div>
+            <div class="input"><select name="size" required>
+                <option value="">Size</option>
+                <option value="small">Small</option>
+                <option value="medium">Medium</option>
+                <option value="large">Large</option>
+            </select></div>
+            <div class="input"><select name="age" >
+                <option value="">Approximate age</option>
+                <option value="0-5 years">0-5 years old</option>
+                <option value="5-10 years">5-10 years old</option>
+                <option value="10+ years old">10+ years old</option>
+            </select></div>
+
+            <div class="input"><input type="text" placeholder="Color(s) of the animal" name="color" required/></div> 
+            <div class="input"><input type="text" placeholder="Breed, best guess!" name="breed" /></div>
+            <div class="input"><input type="text" placeholder="Name, if known" name="name"/></div>
+            <div class="input"><input type="text" placeholder="Your zip code" name="zipCode" maxlength="5" required/></div>
+            <div class="input"><input type="text" placeholder="Date found dd/mm/yy" name="dateFound" required/></div>
+            <div class="input"><textarea type="text" placeholder="Describe the animal." name="description" rows="3" required></textarea></div><br>
+            </div>
+            
+            <button class="button">Save</button>
+            </div>
+            </form> 
+               
+</div>
+         <br><br><br><br><br>
+    </body>
+    {{> footer}}
+</html>

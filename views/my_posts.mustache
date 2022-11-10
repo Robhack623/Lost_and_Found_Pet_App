@@ -1,7 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {{> header}}
+
+</head>
+<body>
+{{> menu}}
+<br>     
+
+    <h1 class = "Found">{{username}}'s Lost Pets 🐾 </h1><hr>
+
+<ol>
 {{#myPostsLost}}
-
-{{user_fk}}
-
-<img src = "/uploads/{{pet_pic}}" />
-
+    <li><h3>A {{species}} named {{name}} !</h3>
+        <ul>
+            <li>Breed: {{breed}}</li>
+            <li>Color: {{color}}</li>
+            <li>Size: {{size}}</li>
+            <li>Age: {{age}}</li>
+            <li>Found on {{dateFound}}</li>
+            <li>Description: {{description}}</li>
+            <img src = "/uploads/{{pet_pic}}" class="uploaded-pic"/>
+        </ul>
+    </li>
 {{/myPostsLost}}
+</ol>
+<br><hr><br>
+
+<h1 class = "Found">{{username}}'s Found Pets 🐾 </h1><hr>
+<ol>
+{{#myPostsFound}}
+    <li><h3>A {{species}} named {{name}} !</h3>
+        <ul>
+            <li>Breed: {{breed}}</li>
+            <li>Color: {{color}}</li>
+            <li>Size: {{size}}</li>
+            <li>Age: {{age}}</li>
+            <li>Found on {{dateFound}}</li>
+            <li>Description: {{description}}</li>
+            <li><img src = "/uploads/{{pet_pic}}" /></li>
+        </ul>
+    </li>
+{{/myPostsFound}}
+</ol>
+<br><br><br><br>
+  {{> footer}}
+    </body>
+   
+</html>

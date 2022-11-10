@@ -1,54 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {{> header}}
 
-<html>
+    <link rel="stylesheet" href="css/login.css">
+</head>
+<body>
+{{> menu}}
+<br>   
 
-    <head>
-     <link rel ="stylesheet" href="/css/foundPost.css"></link>
-    </head>
-    <body>
-    <br>   
-    <button onclick="window.location.href='http://localhost:3000/register'">Register</button>
-     <button onclick="window.location.href='http://localhost:3000/lost_posts'">Go to lost posts</button>
+    <h1 class = "Found">Found Pets 🐾 </h1><hr>
+    <hr>
 
+<br><div><button class="button" onclick="window.location.href='http://localhost:3000/add_found_post'">Found a pet!</button></div><br>
 
-         <h1 class = "Found">Found Pets 🐾 </h1><hr>
-         <form method="POST" action="/found-posts">
-            <p class = "p">Species</p>
-            <input type="text" placeholder="Species" name="species" /> 
-            <p>Color</p>
-            <input type="text" placeholder="Color" name="color" /> 
-            <p>Breed</p>
-            <input type="text" placeholder="Breed" name="breed" />
-            <p>Gender</p>
-            <input type="text" placeholder="Gender" name="gender" />
-            <p>Name</p>
-            <input type="text" placeholder="Name" name="name" />
-            <p>Size</p>
-            <input type="text" placeholder="Size" name="size" />
-            <p>Age</p>
-            <input type="text" placeholder="Age" name="age" />
-            <p>Location</p>
-            <input type="text" placeholder="Location" name="location" />
-            <p>Description</p>
-            <input type="text" placeholder="Description" name="description" />
-            <p>Date found</p>
-            <input type="text" placeholder=Datefound name="date_found" />
-            <button>Save</button>
-            </form> 
-               <hr>
                
       
-            <ul>
-            {{#result}}
-             <li>Species:{{species}}</li>
-             <li>Color:{{color}}</li>
-             <li>Breed:{{breed}} </li>
-             <li>Gender:{{gender}} </li>
-             <li>Name:{{name}} </li>
-             <li>Size:{{size}} </li>
-             <li>Age:{{age}} </li>
-             <li>Location:{{location}} </li>
-             <li>Description:{{description}} </li>
-             <li>Date:{{date_lost}} </li>
+    <ul>
+    {{#result}}
+        <li>Species:{{species}}</li>
+        <li>Color:{{color}}</li>
+        <li>Breed:{{breed}} </li>
+        <li>Gender:{{gender}} </li>
+        <li>Name:{{name}} </li>
+        <li>Size:{{size}} </li>
+        <li>Age:{{age}} </li>
+        <li>Location:{{zipCode}} </li>
+        <li>Description:{{description}} </li>
+        <li>Date:{{dateLost}} </li>
              
        {{! {{#found_post}} 
          {{#comment}}
@@ -71,5 +50,13 @@
             </form>      
             <hr> 
         {{/result}}
+            </ul>
+
+
+
+
+
+          {{> footer}}
     </body>
+   
 </html>

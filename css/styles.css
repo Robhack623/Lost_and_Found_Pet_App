@@ -114,8 +114,8 @@ body {
 .footer {
     width: 100%;
     background-color: #014863;
-    position: absolute;
-    bottom: 0px;
+    position: fixed;
+    bottom: 0;
     display: flex;
     box-shadow: 0 1px 8px 0 rgb(0 0 0 / 20%), 0 3px 3px -2px rgb(0 0 0 / 12%), 0 3px 4px 0 rgb(0 0 0 / 14%);
     justify-content: right;
@@ -124,8 +124,9 @@ body {
 .reg-footer {
     width: 100%;
     background-color: #014863;
-    position: absolute;
-    bottom: 0px;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
     display: flex;
     box-shadow: 0 1px 8px 0 rgb(0 0 0 / 20%), 0 3px 3px -2px rgb(0 0 0 / 12%), 0 3px 4px 0 rgb(0 0 0 / 14%);
     justify-content: right;
@@ -234,4 +235,9 @@ body {
     justify-content: center;
     align-items: center;
     width: 75%;
+}
+
+.uploaded-pic {
+    width:20%;
+    height: 20%
 }
