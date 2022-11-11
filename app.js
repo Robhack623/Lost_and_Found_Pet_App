@@ -62,10 +62,10 @@ app.post ('/register', async (req, res) =>{
         res.redirect('/login')
     } else {
         if(result_username.length >= 1 && result_email.length === 0) {
-            res.render('login', {errorMessage: 'username exists dummy'})
+            res.render('login', {errorMessage: 'username exists'})
         } else if (result_email.length >= 1 && result_username.length === 0) {
-            res.render('login', {errorMessage: 'email exists dummy'})
-        } else {res.render('login', {errorMessage: 'email and username exists dummy'})}
+            res.render('login', {errorMessage: 'email exists'})
+        } else {res.render('login', {errorMessage: 'email and username exists'})}
     }
 })
 
