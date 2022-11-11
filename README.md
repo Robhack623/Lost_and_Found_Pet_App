@@ -27,7 +27,7 @@
 ## Featured programs: 
 - HTML, CSS, JavaScript, Node.js, ElephantSQL, Beekeeper Studio
 
-## SPIRIT GUIDE builders:
+## R&Ds Rescue builders:
 - [Dmitry Shunin](https://https://github.com/Dimasik0204) 
 - [Rob Hackett](https://github.com/Robhack623) 
 - [Daniel Moros](https://github.com/Ddmoros) 
