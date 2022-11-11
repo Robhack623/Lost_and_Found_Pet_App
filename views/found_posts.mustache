@@ -38,7 +38,7 @@
             </ol> 
             <hr>
                 <form method="POST" action = "/comments">  
-                    <textarea type="text" placeholder = "add a comment..." name ="comment" cols="31" rows="3"></textarea>
+                    <textarea type="text" placeholder = "add a comment..." name ="comment" cols="31" rows="3" required></textarea>
                     <input type = "hidden" name=id value={{id}} /> 
                     <br><button class="button">Add a comment for {{name}}</button>
                 </form>      
