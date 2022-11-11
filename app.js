@@ -227,7 +227,7 @@ app.get('/add_lost_post', authentication, async (req,res)=>{
     res.render('add_lost_post')
 })
 
-app.post ('/add_lost_post',  async (req,res)=>{
+app.post ('/add_lost_post', authentication, async (req,res)=>{
     const defaultImage  = "noImage.jpg"
     const userId = req.session.userId
     let lost_animal;
@@ -407,14 +407,14 @@ app.post('/found-posts', authentication, async (req, res) => {
 })
 
 /* deleting the post from the database. */
-app.post('/delete-post', async(req, res) =>  {
+app.post('/delete-post', authentication, async(req, res) =>  {
     let {id} = req.body
     await models.found_comment.destroy({where:{found_fk:id}})
     await models.found_post.destroy({where:{id}})
     res.redirect('/found-posts')
 }) 
 
-app.post('/comments', async(req, res) => {
+app.post('/comments', authentication, async(req, res) => {
     const userId = req.session.userId
     let {comment,id} = req.body
 
